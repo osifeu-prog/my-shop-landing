@@ -266,6 +266,7 @@
             margin-top: 20px;
             font-size: 1.2em;
             color: white;
+            padding: 0 20px;
         }
         #modalPrice {
             font-size: 1.5em;
@@ -439,6 +440,12 @@
                     <div class="gallery-item">
                         <img src="e3bdd8c6-9966-4c50-bb04-e8e6eaf9c0d4.jpeg" alt="Gallery Image 8" data-description="כאספנים תוכלו למכור ולאסוף קלפים, לסחור בהם ולהחליף עם חבריהם, כמו גם לנקוב בערכים שהם מעוניינים למכירת הקלפים שרכשו מהחנויות השונות.">
                     </div>
+                    <div class="gallery-item">
+                        <img src="c0190e32-af92-45f5-9d50-131da2550659.jpeg" alt="Gallery Image 9" data-description="כאספנים תוכלו למכור ולאסוף קלפים, לסחור בהם ולהחליף עם חבריהם, כמו גם לנקוב בערכים שהם מעוניינים למכירת הקלפים שרכשו מהחנויות השונות.">
+                    </div>
+                     <div class="gallery-item">
+                        <img src="c155ccea-f752-4046-bf1e-ed7ed63039fe.jpeg" alt="Gallery Image 10" data-description="כאספנים תוכלו למכור ולאסוף קלפים, לסחור בהם ולהחליף עם חבריהם, כמו גם לנקוב בערכים שהם מעוניינים למכירת הקלפים שרכשו מהחנויות השונות.">
+                    </div>
                 </div>
             </div>
         </section>
@@ -449,7 +456,6 @@
         <div class="modal-content">
             <img id="modalImage" />
             <div id="modalDescription"></div>
-            <div id="modalPrice"></div>
         </div>
     </div>
 
@@ -490,7 +496,6 @@
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const modalDescription = document.getElementById('modalDescription');
-            const modalPrice = document.getElementById('modalPrice');
             const galleryItems = document.querySelectorAll('.gallery-item img');
             const closeBtn = document.querySelector('.close');
 
@@ -501,7 +506,6 @@
                     const description = this.getAttribute('data-description');
                     const randomPrice = Math.floor(Math.random() * (60 - 30 + 1)) + 30; // Random price between 30 and 60
                     modalDescription.innerHTML = `<p>${description}</p><p>לפתיחת חנות חדשה המחיר הוא 189 ש"ח, ובה תוכלו לסחור עם סט של 10 תמונות לבחירתכם מהמאגר המלא שלנו, או להחליף את התמונות שהם קיבלו ולהעלות מוצרים משל עצמם. חנות בבעלותם המלאה. מחיר רכישה מהבוט: ${randomPrice} ש"ח.</p>`;
-                    modalPrice.textContent = ``;
                 });
             });
 
