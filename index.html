@@ -3,66 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חנות טלגרם חכמה</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@700&display=swap" rel="stylesheet">
+    <title>ניפטי - משחק החנויות</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #28a745;
+            --text-color: #343a40;
+            --bg-color: #f8f9fa;
+        }
         body {
             font-family: 'Heebo', sans-serif;
             direction: rtl;
-            background-color: #f0f4f8;
-            color: #333;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
         }
-
         .container {
-            background: white;
-            padding: 40px 60px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
         }
-
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #e9ecef, #ced4da);
+            border-bottom: 5px solid var(--primary-color);
+        }
         h1 {
-            font-size: 2.5em;
-            color: #2196F3;
-            margin-bottom: 10px;
+            font-size: 2.8em;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin: 0;
         }
-
-        p {
+        header p {
             font-size: 1.2em;
-            color: #555;
-            margin-bottom: 30px;
+            margin-top: 10px;
         }
-
         .cta-button {
             display: inline-block;
-            background-color: #4CAF50;
+            background-color: var(--secondary-color);
             color: white;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            font-weight: bold;
+            padding: 12px 25px;
+            font-weight: 700;
             border-radius: 50px;
             text-decoration: none;
-            transition: transform 0.2s ease, background-color 0.2s ease;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
-
         .cta-button:hover {
+            background-color: #218838;
             transform: translateY(-3px);
-            background-color: #45a049;
+        }
+        .section {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+        }
+        .content-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            text-align: right;
+        }
+        .content-box h2 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .grid-container {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            margin-top: 30px;
+        }
+        .grid-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .grid-item h3 {
+            color: var(--secondary-color);
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>חנות טלגרם חכמה</h1>
-        <p>צרו חנות אישית בלחיצת כפתור – דרך טלגרם</p>
-        <a href="#" class="cta-button">התחילו עכשיו</a>
-    </div>
+
+    <header>
+        <div class="container">
+            <h1>ניפטי - משחק החנויות שמשגע את המדינה!</h1>
+            <p>ברוכים הבאים לעולם של ניפטי - המקום שבו החלום על קניון אישי הופך למציאות. הצטרפו למהפכה הדיגיטלית החדשה והתחילו להרוויח עוד היום.</p>
+            <a href="#how-it-works" class="cta-button">התחילו עכשיו</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2 class="section-title">מה זה ניפטי?</h2>
+            <div class="content-box">
+                <p>ניפטי הוא משחק וחוויה עסקית שמאפשרת לכם להקים חנות אישית בתוך פלטפורמת טלגרם. במקום להשקיע אלפי שקלים בפיתוח אתרים או שכירות פיזית, בניפטי אתם רוכשים חנות דיגיטלית משלכם ומקבלים שליטה מלאה על מה שאתם מוכרים.</p>
+                <p><strong>דמיינו זאת כך:</strong> אתם רוכשים חנות בקניון הענק של טלגרם, הופכים אותה לייחודית רק לכם, ומתחילים למכור.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">איך זה עובד?</h2>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h3>רכישת חנות</h3>
+                    <p>כל משתתף רוכש חנות בטלגרם בעלות של 189 ₪.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>קבלת טוקן</h3>
+                    <p>עם הרכישה, אתם מקבלים טוקן ייחודי לבוט החנות שלכם.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>עיצוב והתאמה אישית</h3>
+                    <p>עצבו את הגלריה שלכם וערכו את המוצרים שאתם רוצים למכור.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">מנגנון הרווח והכספים</h2>
+            <div class="content-box">
+                <p>כל המכירות מתבצעות דרך החנות שלכם. כל העברה כספית מאומתת עוברת <strong>ישירות לחשבון הבנק שלכם</strong>, והרווח כולו שלכם.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">בוטים נוספים שניתן ליצור</h2>
+            <div class="grid-container">
+                <div class="grid-item"><h3>אירועים</h3></div>
+                <div class="grid-item"><h3>קהילות</h3></div>
+                <div class="grid-item"><h3>שירות לקוחות</h3></div>
+                <div class="grid-item"><h3>מסחר דיגיטלי</h3></div>
+            </div>
+        </section>
+    </main>
+
 </body>
 </html>
