@@ -26,7 +26,7 @@
             background-color: var(--bg-color-light);
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* מונע גלילה אופקית */
+            overflow-x: hidden;
         }
         .container {
             max-width: 960px;
@@ -45,7 +45,7 @@
             position: relative;
             overflow: hidden;
         }
-        .hero-section::before { /* רקע אנימציה עדינה */
+        .hero-section::before {
             content: '';
             position: absolute;
             top: -50px;
@@ -60,30 +60,31 @@
             0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
             100% { transform: scale(1.1) rotate(5deg); opacity: 1; }
         }
-
         .hero-content {
             position: relative;
-            z-index: 2; /* כדי שהתוכן יהיה מעל האנימציה */
+            z-index: 2;
         }
         .hero-section h1 {
             font-size: 3.5em;
             font-weight: 900;
             color: var(--primary-color);
             margin: 0 0 15px 0;
-            animation: slideInUp 1s ease-out;
+            animation: fadeInDown 1s ease-out;
         }
         .hero-section p {
             font-size: 1.4em;
             color: var(--text-color);
             max-width: 700px;
             margin: 0 auto 30px auto;
-            animation: fadeIn 1.5s ease-out;
+            animation: fadeInUp 1.5s ease-out;
         }
         .cta-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin-top: 40px;
+            animation: zoomIn 1s ease-out 1.2s forwards;
+            opacity: 0;
         }
         .cta-button {
             display: flex;
@@ -136,8 +137,8 @@
             border-radius: 5px;
         }
 
-        /* What is Nifty */
-        .what-is-nifty .content-box {
+        /* Content Box */
+        .content-box {
             background: white;
             padding: 40px;
             border-radius: 20px;
@@ -146,37 +147,24 @@
             text-align: right;
             position: relative;
             overflow: hidden;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
         }
-        .what-is-nifty .content-box p {
+        .content-box p {
             font-size: 1.1em;
             margin-bottom: 20px;
         }
-        .what-is-nifty .image-overlay { /* תמונת רקע עדינה */
-            position: absolute;
-            bottom: -20px;
-            left: -20px;
-            opacity: 0.1;
-            width: 150px;
-            height: 150px;
-            background-image: url('{{site.github.url}}/nifty_logo.png'); /* נניח שהתמונה שלך נקראת nifty_logo.png ונמצאת בשורש הפרויקט */
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .what-is-nifty .content-box p {
-            position: relative;
-            z-index: 2;
+        .content-box strong {
+            color: var(--primary-color);
         }
 
-        /* How it Works */
-        .how-it-works .grid-container {
+        /* Grid */
+        .grid-container {
             display: grid;
             gap: 30px;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
-        .how-it-works .grid-item {
+        .grid-item {
             background-color: white;
             padding: 30px;
             border-radius: 15px;
@@ -188,82 +176,74 @@
             animation: zoomIn 1s ease-out forwards;
             opacity: 0;
         }
-        .how-it-works .grid-item:nth-child(1) { animation-delay: 0.2s; }
-        .how-it-works .grid-item:nth-child(2) { animation-delay: 0.4s; }
-        .how-it-works .grid-item:nth-child(3) { animation-delay: 0.6s; }
-
-        .how-it-works .grid-item h3 {
+        .grid-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        .grid-item h3 {
             color: var(--primary-color);
             font-weight: 700;
             font-size: 1.3em;
             margin-top: 0;
         }
-        .how-it-works .grid-item p {
+        .grid-item p {
             color: #555;
         }
-        .how-it-works .grid-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        
+        /* New Styles for Recruitment and Gallery */
+        .recruitment-section .grid-item h3 {
+            color: var(--secondary-color);
         }
 
-        /* Profit Mechanism */
-        .profit-section {
-            background: var(--bg-color-dark);
+        .gallery-section {
+            background-color: var(--bg-color-dark);
             color: var(--light-text);
-            padding: 80px 20px;
+            padding: 80px 0;
             border-radius: 20px;
-            margin: 60px auto;
-            max-width: 900px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-            animation: fadeIn 1.5s ease-out;
+            margin-top: 60px;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
-        .profit-section h2 {
-            color: var(--accent-color);
-            font-size: 2.2em;
-            margin-bottom: 20px;
-            animation: flipInX 1s ease-out;
+        .gallery-section .section-title {
+            color: var(--light-text);
         }
-        .profit-section p {
-            font-size: 1.2em;
-            line-height: 1.8;
-            max-width: 700px;
-            margin: 0 auto 30px auto;
-        }
-        .profit-section strong {
-            color: var(--secondary-color);
-            font-weight: 900;
-        }
-
-        /* Other Bots */
-        .other-bots .grid-container {
+        .gallery-grid {
             display: grid;
-            gap: 25px;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
         }
-        .other-bots .grid-item {
-            background: var(--primary-color);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            animation: fadeInRight 1s ease-out forwards;
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: zoomIn 1s ease-out forwards;
             opacity: 0;
         }
-        .other-bots .grid-item:nth-child(1) { background-color: #007bff; animation-delay: 0.2s; }
-        .other-bots .grid-item:nth-child(2) { background-color: #6610f2; animation-delay: 0.4s; }
-        .other-bots .grid-item:nth-child(3) { background-color: #fd7e14; animation-delay: 0.6s; }
-        .other-bots .grid-item:nth-child(4) { background-color: #20c997; animation-delay: 0.8s; }
-
-        .other-bots .grid-item h3 {
-            margin: 0;
-            font-size: 1.2em;
-            font-weight: 700;
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
         }
-        .other-bots .grid-item:hover {
-            transform: scale(1.05);
-            background-color: var(--accent-color); /* שינוי צבע עדינה בהובר */
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-item::after { /* Overlay for interaction */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 123, 255, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover::after {
+            opacity: 1;
         }
 
         /* Footer */
@@ -281,64 +261,40 @@
             font-size: 0.9em;
         }
 
+        /* New CTA at end of blocks */
+        .block-cta {
+            text-align: center;
+            margin-top: 25px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(0, 123, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+        }
+
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes flipInX {
-            from { transform: perspective(400px) rotate3d(1, 0, 0, 90deg); opacity: 0; }
-            to { transform: perspective(400px) rotate3d(1, 0, 0, 0deg); opacity: 1; }
-        }
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes flipInX { from { transform: perspective(400px) rotate3d(1, 0, 0, 90deg); opacity: 0; } to { transform: perspective(400px) rotate3d(1, 0, 0, 0deg); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 2.5em;
-            }
-            .hero-section p {
-                font-size: 1.1em;
-            }
-            .cta-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .cta-button {
-                width: 80%;
-                margin: 0 auto;
-            }
-            .section-title {
-                font-size: 2em;
-            }
-            .what-is-nifty .content-box {
-                padding: 25px;
-            }
-            .profit-section {
-                margin: 40px 10px;
-                padding: 60px 15px;
-            }
+            .hero-section h1 { font-size: 2.5em; }
+            .hero-section p { font-size: 1.1em; }
+            .cta-buttons { flex-direction: column; gap: 15px; }
+            .cta-button { width: 80%; margin: 0 auto; }
+            .section-title { font-size: 2em; }
         }
     </style>
-
+    
     <meta property="og:title" content="ניפטי - משחק החנויות שמשגע את המדינה!">
     <meta property="og:description" content="הקימו חנות טלגרם אישית בקלות, התחילו להרוויח עוד היום והצטרפו למהפכה הדיגיטלית!">
-    <meta property="og:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png"> <meta property="og:url" content="https://osifeu-prog.github.io/my-shop-landing/">
+    <meta property="og:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png">
+    <meta property="og:url" content="https://osifeu-prog.github.io/my-shop-landing/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png">
@@ -365,8 +321,13 @@
             <div class="container">
                 <h2 class="section-title">מה זה ניפטי?</h2>
                 <div class="content-box">
-                    <div class="image-overlay"></div> <p><strong>ניפטי</strong> הוא משחק וחוויה עסקית שמאפשרת לכם להקים חנות אישית בתוך פלטפורמת טלגרם. במקום להשקיע אלפי שקלים בפיתוח אתרים או שכירות פיזית, בניפטי אתם רוכשים חנות דיגיטלית משלכם ומקבלים שליטה מלאה על מה שאתם מוכרים.</p>
+                    <p><strong>ניפטי</strong> הוא משחק וחוויה עסקית שמאפשרת לכם להקים חנות אישית בתוך פלטפורמת טלגרם. במקום להשקיע אלפי שקלים בפיתוח אתרים או שכירות פיזית, בניפטי אתם רוכשים חנות דיגיטלית משלכם ומקבלים שליטה מלאה על מה שאתם מוכרים.</p>
                     <p><strong>דמיינו זאת כך:</strong> אתם רוכשים חנות בקניון הענק של טלגרם, הופכים אותה לייחודית רק לכם, ומתחילים למכור.</p>
+                    <div class="block-cta">
+                        <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
+                             כנסו עכשיו לחנות בטלגרם <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -388,26 +349,85 @@
                         <p>עצבו את גלריית המוצרים שלכם, שנו תמונות, תיאורים ומחירים בקלות.</p>
                     </div>
                 </div>
+                <div class="block-cta">
+                    <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
+                         התחילו לבנות חנות משלכם <i class="fab fa-telegram-plane"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
         <section class="section">
             <div class="profit-section">
-                <h2>מנגנון הרווח והכספים</h2>
+                <h2 class="section-title">מנגנון הרווח והכספים</h2>
                 <p>כל המכירות מתבצעות דרך החנות שלכם, הכוללת גם מערכת קבלות מבוססת NFT לתיעוד דיגיטלי. והכי חשוב?</p>
                 <p><strong>כל העברה כספית מאומתת מחשבון הלקוח עוברת <span style="color: var(--secondary-color);">ישירות לחשבון הבנק שלכם!</span> הרווח כולו שלכם.</strong></p>
+                <div class="block-cta">
+                    <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
+                         התחילו להרוויח היום <i class="fab fa-telegram-plane"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section class="section other-bots">
+        <section class="section">
             <div class="container">
-                <h2 class="section-title">בוטים נוספים שניתן ליצור</h2>
-                <p>אנחנו בניפטי לא מסתפקים רק בחנויות. אנו מפתחים מערכות בוטים שלמות שיכולות להפוך כל רעיון למציאות:</p>
+                <h2 class="section-title">הצטרפו לקהילה שלנו</h2>
+                <div class="content-box">
+                    <p>אנו מפתחים מערכות בוטים שלמות שיכולות להפוך כל רעיון למציאות. הצטרפו לקהילת המשקיעים שלנו בטלגרם כדי לקבל עדכונים, להשפיע על פיתוחים עתידיים ולהתחבר ליזמים נוספים.</p>
+                    <div class="block-cta">
+                        <a href="https://t.me/+HIzvM8sEgh1kNWY0" target="_blank" class="cta-button telegram-bot">
+                            <i class="fab fa-telegram-plane"></i> הצטרפו לקהילת המשקיעים
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section recruitment-section">
+            <div class="container">
+                <h2 class="section-title">אשמח לעבוד איתך</h2>
+                <p>אנחנו תמיד מחפשים שותפים חדשים עם תשוקה לחדשנות, למכירות, ולפיתוחים טכנולוגיים. אם אתם מעוניינים להצטרף לצוות שלנו או להגדיל את הקהילה - צרו קשר!</p>
                 <div class="grid-container">
-                    <div class="grid-item"><h3><i class="fas fa-calendar-alt"></i> אירועים</h3></div>
-                    <div class="grid-item"><h3><i class="fas fa-users"></i> קהילות</h3></div>
-                    <div class="grid-item"><h3><i class="fas fa-headset"></i> שירות לקוחות</h3></div>
-                    <div class="grid-item"><h3><i class="fas fa-chart-line"></i> מסחר דיגיטלי</h3></div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-laptop-code"></i> מפתחים</h3>
+                        <p>בואו לבנות איתנו את הדור הבא של הבוטים לטלגרם.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-chart-line"></i> אנשי מכירות</h3>
+                        <p>הצטרפו אלינו והרוויחו עמלות על כל חנות שתמכרו.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-users"></i> מנהלי קהילה</h3>
+                        <p>עזרו לנו לגדול ולהפיץ את הבשורה של ניפטי.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section gallery-section">
+            <div class="container">
+                <h2 class="section-title">הכירו את ניפטי דרך תמונות</h2>
+                <p>התמונות הבאות מציגות חלקים מהמערכת וממחישות את עולם האפשרויות שלנו.</p>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="your-image-1.jpg" alt="Gallery Image 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="your-image-2.jpg" alt="Gallery Image 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="your-image-3.jpg" alt="Gallery Image 3">
+                    </div>
                 </div>
             </div>
         </section>
@@ -431,13 +451,11 @@
         });
 
         // Intersection Observer for animations on scroll
-        const faders = document.querySelectorAll('.section, .content-box, .grid-item, .profit-section');
-
+        const faders = document.querySelectorAll('.content-box, .grid-item, .profit-section, .gallery-item');
         const appearOptions = {
             threshold: 0.2,
             rootMargin: "0px 0px -50px 0px"
         };
-
         const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) {
@@ -445,7 +463,7 @@
                 } else {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
-                    entry.target.style.animation = 'none'; /* Remove animation once it appears */
+                    entry.target.style.animationPlayState = 'running';
                     appearOnScroll.unobserve(entry.target);
                 }
             });
@@ -454,25 +472,9 @@
         faders.forEach(fader => {
             fader.style.opacity = '0';
             fader.style.transform = 'translateY(20px)';
+            fader.style.animationPlayState = 'paused';
             appearOnScroll.observe(fader);
         });
-
-        // Special handling for grid items to use their specific delays
-        document.querySelectorAll('.how-it-works .grid-item, .other-bots .grid-item').forEach(item => {
-            item.style.opacity = '0'; // Ensure it starts hidden
-            item.style.animationPlayState = 'paused'; // Pause specific animation until visible
-
-            const itemObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animationPlayState = 'running'; // Play when visible
-                        itemObserver.unobserve(entry.target);
-                    }
-                });
-            }, appearOptions);
-            itemObserver.observe(item);
-        });
-
     </script>
 </body>
 </html>
