@@ -3,352 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nifty - משחק החנויות שמשגע את המדינה</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>חנות טלגרם חכמה</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #2196F3;
-            --accent-color: #FFC107;
-            --text-color: #333;
-            --light-bg: #f9f9f9;
-            --dark-bg: #1a1a1a;
-            --card-bg: #fff;
-        }
-
         body {
             font-family: 'Heebo', sans-serif;
-            color: var(--text-color);
-            line-height: 1.6;
+            direction: rtl;
+            background-color: #f0f4f8;
+            color: #333;
             margin: 0;
             padding: 0;
-            background-color: var(--light-bg);
-            direction: rtl;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #e0f7fa, #b3e5fc);
-            color: var(--text-color);
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 3em;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-weight: 900;
-        }
-
-        header p {
-            font-size: 1.2em;
+            background: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             max-width: 600px;
-            margin: 0 auto;
-            font-weight: 400;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 30px;
         }
 
         .cta-button {
             display: inline-block;
-            background-color: var(--primary-color);
+            background-color: #4CAF50;
             color: white;
             padding: 15px 30px;
             font-size: 1.1em;
-            font-weight: 700;
+            font-weight: bold;
             border-radius: 50px;
             text-decoration: none;
-            margin-top: 30px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, background-color 0.2s ease;
         }
 
         .cta-button:hover {
-            transform: scale(1.05);
+            transform: translateY(-3px);
             background-color: #45a049;
-        }
-
-        .section {
-            padding: 60px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5em;
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-            position: relative;
-            font-weight: 700;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent-color);
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        .card h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
-            font-weight: 700;
-        }
-
-        .card p {
-            font-size: 0.95em;
-        }
-
-        .how-it-works-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .step {
-            text-align: center;
-        }
-
-        .step-number {
-            font-size: 2em;
-            color: white;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-weight: 900;
-        }
-
-        .step h4 {
-            color: var(--secondary-color);
-            font-weight: 700;
-            margin-top: 0;
-        }
-
-        .profit-section {
-            background: var(--dark-bg);
-            color: #f0f0f0;
-            padding: 60px 0;
-            border-radius: 30px;
-            margin: 50px 0;
-            text-align: center;
-        }
-
-        .profit-section h2 {
-            color: var(--accent-color);
-        }
-
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            margin-top: 40px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--secondary-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            width: 100%;
-            padding: 20px;
-            position: relative;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background-color: var(--primary-color);
-            border: 4px solid var(--light-bg);
-            border-radius: 50%;
-            position: absolute;
-            left: 50%;
-            top: 25px;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        .timeline-item h4 {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            background-color: var(--dark-bg);
-            color: #f0f0f0;
-            margin-top: 50px;
-        }
-
-        footer p {
-            margin: 0;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="container">
-            <h1>ניפטי - משחק החנויות שמשגע את המדינה!</h1>
-            <p>ברוכים הבאים לעולם של ניפטי - המקום שבו החלום על קניון אישי הופך למציאות.</p>
-            <a href="#how-it-works" class="cta-button">התחל עכשיו</a>
-        </div>
-    </header>
-
-    <main>
-        <section id="what-is" class="section">
-            <div class="container">
-                <h2 class="section-title">מה זה ניפטי?</h2>
-                <div class="card">
-                    <p><strong>ניפטי</strong> הוא משחק וחוויה עסקית שמאפשרת לכם להקים חנות אישית בתוך פלטפורמת טלגרם. במקום להשקיע אלפי שקלים בפיתוח אתרים או שכירות פיזית, בניפטי אתם רוכשים חנות דיגיטלית משלכם ומקבלים שליטה מלאה על מה שאתם מוכרים.</p>
-                    <p>דמיינו זאת כך: אתם רוכשים חנות בקניון הענק של טלגרם, הופכים אותה לייחודית רק לכם, ומתחילים למכור.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="how-it-works" class="section">
-            <div class="container">
-                <h2 class="section-title">איך זה עובד?</h2>
-                <div class="how-it-works-grid">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h4>רכישת חנות</h4>
-                        <p>כל משתתף רוכש חנות בטלגרם בעלות של 189 ₪.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h4>קבלת טוקן</h4>
-                        <p>עם הרכישה, אתם מקבלים טוקן ייחודי לבוט החנות שלכם.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h4>עיצוב הגלריה</h4>
-                        <p>בתוך הבוט, אתם מקבלים גלריה של תמונות "קלפי משחק" שתוכלו למכור לאספנים.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <h4>התאמה אישית</h4>
-                        <p>האפשרות הגמישה ביותר: אתם יכולים לערוך ולשנות את התמונות, הכותרות, התיאורים והמחירים כדי להציג כל מוצר שרק תחלמו למכור.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="profit-mechanism" class="profit-section">
-            <div class="container">
-                <h2 class="section-title">מנגנון הרווח והכספים</h2>
-                <p>כל המכירות מתבצעות דרך החנות שלכם, שכוללת גם מערכת קבלות מבוססת NFT לתיעוד דיגיטלי של כל עסקה.</p>
-                <p>מנגנון הרווח שלנו פשוט וברור: <strong>כל העברה כספית מאומתת מחשבון הלקוח עוברת ישירות לחשבון הבנק שלכם.</strong> החנות שלכם מנהלת את העסקה, והרווח כולו שלכם.</p>
-            </div>
-        </section>
-
-        <section id="other-bots" class="section">
-            <div class="container">
-                <h2 class="section-title">בוטים נוספים שניתן ליצור</h2>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">אנחנו בניפטי לא מסתפקים רק בחנויות. אנו מפתחים מערכות בוטים שלמות שיכולות להפוך כל רעיון למציאות:</p>
-                <div class="card-grid">
-                    <div class="card">
-                        <h3>בוטים לאירועים</h3>
-                        <p>ניהול רישום, קבלת תשלומים אוטומטית וחלוקת כרטיסים לאירועים.</p>
-                    </div>
-                    <div class="card">
-                        <h3>בוטים לניהול קהילות</h3>
-                        <p>ניהול משתמשים, חלוקת תכנים בלעדיים וארגון סקרים.</p>
-                    </div>
-                    <div class="card">
-                        <h3>בוטים לשירות לקוחות</h3>
-                        <p>מתן מענה אוטומטי, מעקב אחר הזמנות וטיפול בפניות.</p>
-                    </div>
-                    <div class="card">
-                        <h3>בוטים למסחר דיגיטלי</h3>
-                        <p>בניית מערכות מסחר מורכבות, ניהול מלאי אוטומטי ויצירת קטלוגים.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="project-history" class="section">
-            <div class="container">
-                <h2 class="section-title">היסטוריית הפרויקט</h2>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">הפרויקט החל כרעיון פורץ דרך להנגיש את עולם העסקים הדיגיטלי לכל אחד.</p>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <h4>שלב 1: פיתוח הבוט הבסיסי</h4>
-                        <p>הקמת תשתית הבוט הראשוני.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4>שלב 2: יצירת מודל הקלפים והחנות</h4>
-                        <p>שילוב הרעיון של "קלפי המשחק" בתוך החנות הדיגיטלית.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4>שלב 3: פיתוח מערכת הרווחים והתשלומים</h4>
-                        <p>בניית מנגנון תשלומים ישיר ובטוח למשתמשים.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4>שלב 4: הרחבת הפלטפורמה</h4>
-                        <p>פיתוח יכולות נוספות עבור הבוטים, כפי שפורט לעיל.</p>
-                    </div>
-                </div>
-                <p style="text-align: center; margin-top: 40px;">אנו ממשיכים לפתח ולשכלל את המערכות כדי להציע לכם את הכלים המתקדמים והיעילים ביותר להגשמת חלומותיכם העסקיים.</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 ניפטי. כל הזכויות שמורות.</p>
-        </div>
-    </footer>
-
+    <div class="container">
+        <h1>חנות טלגרם חכמה</h1>
+        <p>צרו חנות אישית בלחיצת כפתור – דרך טלגרם</p>
+        <a href="#" class="cta-button">התחילו עכשיו</a>
+    </div>
 </body>
 </html>
