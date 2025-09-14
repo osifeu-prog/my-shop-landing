@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary-color: #007bff; /* כחול טלגרם */
-            --secondary-color: #28a745; /* ירוק פעולה */
-            --accent-color: #6f42c1; /* סגול מודרני */
+            --primary-color: #007bff;
+            --secondary-color: #28a745;
+            --accent-color: #6f42c1;
             --text-color: #343a40;
             --light-text: #f8f9fa;
             --bg-color-light: #f8f9fa;
@@ -33,8 +33,6 @@
             margin: 0 auto;
             padding: 20px;
         }
-
-        /* Hero Section */
         .hero-section {
             text-align: center;
             padding: 100px 20px;
@@ -113,8 +111,6 @@
         .cta-button.contact-me:hover {
             background-color: #218838;
         }
-
-        /* Section Styling */
         .section {
             padding: 80px 0;
             text-align: center;
@@ -136,8 +132,6 @@
             margin: 15px auto 0;
             border-radius: 5px;
         }
-
-        /* Content Box */
         .content-box {
             background: white;
             padding: 40px;
@@ -157,8 +151,6 @@
         .content-box strong {
             color: var(--primary-color);
         }
-
-        /* Grid */
         .grid-container {
             display: grid;
             gap: 30px;
@@ -189,12 +181,9 @@
         .grid-item p {
             color: #555;
         }
-        
-        /* New Styles for Recruitment and Gallery */
         .recruitment-section .grid-item h3 {
             color: var(--secondary-color);
         }
-
         .gallery-section {
             background-color: var(--bg-color-dark);
             color: var(--light-text);
@@ -231,7 +220,7 @@
         .gallery-item:hover img {
             transform: scale(1.1);
         }
-        .gallery-item::after { /* Overlay for interaction */
+        .gallery-item::after {
             content: '';
             position: absolute;
             top: 0;
@@ -245,8 +234,6 @@
         .gallery-item:hover::after {
             opacity: 1;
         }
-
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -260,8 +247,6 @@
             margin: 0;
             font-size: 0.9em;
         }
-
-        /* New CTA at end of blocks */
         .block-cta {
             text-align: center;
             margin-top: 25px;
@@ -272,16 +257,12 @@
             70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(0, 123, 255, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
         }
-
-        /* Animations */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         @keyframes fadeInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes flipInX { from { transform: perspective(400px) rotate3d(1, 0, 0, 90deg); opacity: 0; } to { transform: perspective(400px) rotate3d(1, 0, 0, 0deg); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .hero-section h1 { font-size: 2.5em; }
             .hero-section p { font-size: 1.1em; }
@@ -290,7 +271,6 @@
             .section-title { font-size: 2em; }
         }
     </style>
-    
     <meta property="og:title" content="ניפטי - משחק החנויות שמשגע את המדינה!">
     <meta property="og:description" content="הקימו חנות טלגרם אישית בקלות, התחילו להרוויח עוד היום והצטרפו למהפכה הדיגיטלית!">
     <meta property="og:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png">
@@ -300,7 +280,6 @@
     <meta name="twitter:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png">
 </head>
 <body>
-
     <header class="hero-section">
         <div class="hero-content">
             <h1>ניפטי - משחק החנויות שמשגע את המדינה!</h1>
@@ -315,7 +294,6 @@
             </div>
         </div>
     </header>
-
     <main>
         <section class="section what-is-nifty">
             <div class="container">
@@ -331,7 +309,6 @@
                 </div>
             </div>
         </section>
-        
         <section class="section how-it-works">
             <div class="container">
                 <h2 class="section-title">איך זה עובד?</h2>
@@ -356,7 +333,6 @@
                 </div>
             </div>
         </section>
-
         <section class="section">
             <div class="profit-section">
                 <h2 class="section-title">מנגנון הרווח והכספים</h2>
@@ -369,7 +345,6 @@
                 </div>
             </div>
         </section>
-
         <section class="section">
             <div class="container">
                 <h2 class="section-title">הצטרפו לקהילה שלנו</h2>
@@ -383,7 +358,6 @@
                 </div>
             </div>
         </section>
-
         <section class="section recruitment-section">
             <div class="container">
                 <h2 class="section-title">אשמח לעבוד איתך</h2>
@@ -413,34 +387,45 @@
                 </div>
             </div>
         </section>
-
         <section class="section gallery-section">
             <div class="container">
                 <h2 class="section-title">הכירו את ניפטי דרך תמונות</h2>
                 <p>התמונות הבאות מציגות חלקים מהמערכת וממחישות את עולם האפשרויות שלנו.</p>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="your-image-1.jpg" alt="Gallery Image 1">
+                        <img src="02d8b47d-fe66-4b64-ae12-fc809b4391c5.jfif" alt="Gallery Image 1">
                     </div>
                     <div class="gallery-item">
-                        <img src="your-image-2.jpg" alt="Gallery Image 2">
+                        <img src="54c26bd7-5f3b-48f3-99e3-d9649d7508c3.jfif" alt="Gallery Image 2">
                     </div>
                     <div class="gallery-item">
-                        <img src="your-image-3.jpg" alt="Gallery Image 3">
+                        <img src="5e65656c-85cc-46ef-b829-79a1bfbecfca.jfif" alt="Gallery Image 3">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="6f76ca20-16ad-44cf-885c-2c697353f7b1.jfif" alt="Gallery Image 4">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="b8afc1cc-6701-4d4f-aa4d-adc856f6ce2c.jfif" alt="Gallery Image 5">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="dbe5ecca-41e7-4231-bac0-11cd50e70497.jfif" alt="Gallery Image 6">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="df5f9a13-584a-4f6c-86b2-1e3922a646cc.jfif" alt="Gallery Image 7">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="e3bdd8c6-9966-4c50-bb04-e8e6eaf9c0d4.jfif" alt="Gallery Image 8">
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
     <footer>
         <div class="container">
             <p>&copy; 2025 Nifty. כל הזכויות שמורות. נבנה באהבה עבור osifeu-prog.</p>
         </div>
     </footer>
-
     <script>
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -449,8 +434,6 @@
                 });
             });
         });
-
-        // Intersection Observer for animations on scroll
         const faders = document.querySelectorAll('.content-box, .grid-item, .profit-section, .gallery-item');
         const appearOptions = {
             threshold: 0.2,
@@ -468,7 +451,6 @@
                 }
             });
         }, appearOptions);
-
         faders.forEach(fader => {
             fader.style.opacity = '0';
             fader.style.transform = 'translateY(20px)';
