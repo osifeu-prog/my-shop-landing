@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ניפטי - משחק החנויות שמשגע את המדינה!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel-stylesheet>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- Open Graph Tags for Social Sharing -->
@@ -87,12 +87,6 @@
             max-width: 700px;
             margin: 0 auto 30px auto;
             animation: fadeInUp 1.5s ease-out;
-        }
-        .visitor-count {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-top: 20px;
         }
         .cta-buttons {
             display: flex;
@@ -283,11 +277,6 @@
             color: white;
             padding: 0 20px;
         }
-        #modalPrice {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
         .close {
             position: absolute;
             top: 15px;
@@ -330,10 +319,6 @@
                 <a href="https://t.me/OsifFin" target="_blank" class="cta-button contact-me">
                     <i class="fas fa-comments"></i> דברו איתי ישירות
                 </a>
-            </div>
-            <div class="visitor-count">
-                <p>מבקרים ייחודיים בדף הנחיתה: <span id="unique-visitors">...</span></p>
-                <p>סך כל הביקורים: <span id="total-visits">...</span></p>
             </div>
         </div>
     </header>
@@ -492,105 +477,6 @@
     </footer>
 
     <script type="module">
-        // ייבוא פונקציות מ-Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, addDoc, onSnapshot, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        
-        // הגדרת משתנים גלובליים שסופקו מהסביבה
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db;
-        let auth;
-        let userId;
-
-        // אתחול Firebase והתחברות משתמש
-        async function initializeFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                userId = auth.currentUser?.uid || "anonymous";
-
-                console.log("Firebase initialized successfully. User ID:", userId);
-                trackPageVisit();
-                setupRealtimeListeners();
-            } catch (error) {
-                console.error("Error initializing Firebase:", error);
-            }
-        }
-
-        // פונקציה ללכידת IP ושמירת נתוני ביקור במסד הנתונים
-        async function trackPageVisit() {
-            try {
-                // שימוש בשירות חיצוני כדי לקבל IP
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                const userIp = data.ip;
-                const userAgent = navigator.userAgent;
-
-                const visitData = {
-                    ip: userIp,
-                    timestamp: new Date(),
-                    userAgent: userAgent,
-                };
-                
-                // שמירת הביקור במסד הנתונים הציבורי
-                const visitsCollectionRef = collection(db, `artifacts/${appId}/public/data/visits`);
-                await addDoc(visitsCollectionRef, visitData);
-                
-                console.log("Visit tracked:", visitData);
-
-            } catch (error) {
-                console.error("Error tracking visit:", error);
-            }
-        }
-
-        // פונקציה להגדרת מאזינים לשינויים במסד הנתונים
-        function setupRealtimeListeners() {
-            try {
-                const visitsCollectionRef = collection(db, `artifacts/${appId}/public/data/visits`);
-                
-                // מאזין שמגיב בזמן אמת לשינויים במסד
-                onSnapshot(visitsCollectionRef, async (querySnapshot) => {
-                    const allVisits = [];
-                    querySnapshot.forEach((doc) => {
-                        allVisits.push(doc.data());
-                    });
-                    
-                    // ספירת ביקורים ייחודיים לפי כתובת IP
-                    const uniqueIps = new Set(allVisits.map(visit => visit.ip));
-                    const uniqueVisitorCount = uniqueIps.size;
-                    const totalVisitorCount = allVisits.length;
-
-                    // עדכון המונה באתר
-                    document.getElementById('unique-visitors').innerText = uniqueVisitorCount;
-                    document.getElementById('total-visits').innerText = totalVisitorCount;
-
-                    console.log(`Total visits: ${totalVisitorCount}, Unique visitors: ${uniqueVisitorCount}`);
-                }, (error) => {
-                    console.error("Error listening to visits data:", error);
-                });
-            } catch (error) {
-                console.error("Error setting up listener:", error);
-            }
-        }
-
-        // הפעלת לוגיקה ברגע שהדף נטען
-        window.onload = function() {
-            initializeFirebase();
-        };
-
-
         // לוגיקה קיימת של האתר
         document.addEventListener('DOMContentLoaded', function() {
             // General scroll animations
