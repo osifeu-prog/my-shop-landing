@@ -3,352 +3,476 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nifty - משחק החנויות שמשגע את המדינה</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>ניפטי - משחק החנויות שמשגע את המדינה!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #2196F3;
-            --accent-color: #FFC107;
-            --text-color: #333;
-            --light-bg: #f9f9f9;
-            --dark-bg: #1a1a1a;
-            --card-bg: #fff;
+            --primary-color: #007bff; /* כחול טלגרם */
+            --secondary-color: #28a745; /* ירוק פעולה */
+            --accent-color: #6f42c1; /* סגול מודרני */
+            --text-color: #343a40;
+            --light-text: #f8f9fa;
+            --bg-color-light: #f8f9fa;
+            --bg-color-dark: #212529;
+            --gradient-light: linear-gradient(135deg, #e0f2f7, #c6e7f2);
+            --gradient-dark: linear-gradient(135deg, #1f2733, #0a0e14);
         }
-
         body {
             font-family: 'Heebo', sans-serif;
-            color: var(--text-color);
+            direction: rtl;
             line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color-light);
             margin: 0;
             padding: 0;
-            background-color: var(--light-bg);
-            direction: rtl;
+            overflow-x: hidden; /* מונע גלילה אופקית */
         }
-
         .container {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        header {
+        /* Hero Section */
+        .hero-section {
             text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #e0f7fa, #b3e5fc);
-            color: var(--text-color);
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 100px 20px;
+            background: var(--gradient-light);
+            border-bottom-left-radius: 70px;
+            border-bottom-right-radius: 70px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before { /* רקע אנימציה עדינה */
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 90% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 50%);
+            animation: bg-animate 20s infinite alternate;
+        }
+        @keyframes bg-animate {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+            100% { transform: scale(1.1) rotate(5deg); opacity: 1; }
         }
 
-        header h1 {
-            font-size: 3em;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        .hero-content {
+            position: relative;
+            z-index: 2; /* כדי שהתוכן יהיה מעל האנימציה */
+        }
+        .hero-section h1 {
+            font-size: 3.5em;
             font-weight: 900;
+            color: var(--primary-color);
+            margin: 0 0 15px 0;
+            animation: slideInUp 1s ease-out;
         }
-
-        header p {
-            font-size: 1.2em;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 400;
+        .hero-section p {
+            font-size: 1.4em;
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            animation: fadeIn 1.5s ease-out;
         }
-
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
         .cta-button {
-            display: inline-block;
-            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--secondary-color);
             color: white;
             padding: 15px 30px;
-            font-size: 1.1em;
             font-weight: 700;
+            font-size: 1.1em;
             border-radius: 50px;
             text-decoration: none;
-            margin-top: 30px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-
+        .cta-button.telegram-bot {
+            background-color: var(--primary-color);
+        }
         .cta-button:hover {
-            transform: scale(1.05);
-            background-color: #45a049;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+        .cta-button.telegram-bot:hover {
+            background-color: #0056b3;
+        }
+        .cta-button.contact-me:hover {
+            background-color: #218838;
         }
 
+        /* Section Styling */
         .section {
-            padding: 60px 0;
-        }
-
-        .section-title {
+            padding: 80px 0;
             text-align: center;
-            font-size: 2.5em;
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-            position: relative;
-            font-weight: 700;
         }
-
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            color: var(--accent-color);
+            margin-bottom: 50px;
+            position: relative;
+            animation: fadeInDown 1s ease-out;
+        }
         .section-title::after {
             content: '';
             display: block;
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent-color);
-            margin: 10px auto 0;
-            border-radius: 2px;
+            width: 100px;
+            height: 5px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+            border-radius: 5px;
         }
 
-        .card-grid {
+        /* What is Nifty */
+        .what-is-nifty .content-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: right;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out;
+        }
+        .what-is-nifty .content-box p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        .what-is-nifty .image-overlay { /* תמונת רקע עדינה */
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            opacity: 0.1;
+            width: 150px;
+            height: 150px;
+            background-image: url('{{site.github.url}}/nifty_logo.png'); /* נניח שהתמונה שלך נקראת nifty_logo.png ונמצאת בשורש הפרויקט */
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .what-is-nifty .content-box p {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* How it Works */
+        .how-it-works .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
-
-        .card {
-            background-color: var(--card-bg);
+        .how-it-works .grid-item {
+            background-color: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        .card h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
-            font-weight: 700;
-        }
-
-        .card p {
-            font-size: 0.95em;
-        }
-
-        .how-it-works-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .step {
+            position: relative;
+            overflow: hidden;
             text-align: center;
+            animation: zoomIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        .how-it-works .grid-item:nth-child(1) { animation-delay: 0.2s; }
+        .how-it-works .grid-item:nth-child(2) { animation-delay: 0.4s; }
+        .how-it-works .grid-item:nth-child(3) { animation-delay: 0.6s; }
+
+        .how-it-works .grid-item h3 {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-top: 0;
+        }
+        .how-it-works .grid-item p {
+            color: #555;
+        }
+        .how-it-works .grid-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .step-number {
-            font-size: 2em;
-            color: white;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
+        /* Profit Mechanism */
+        .profit-section {
+            background: var(--bg-color-dark);
+            color: var(--light-text);
+            padding: 80px 20px;
+            border-radius: 20px;
+            margin: 60px auto;
+            max-width: 900px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .profit-section h2 {
+            color: var(--accent-color);
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            animation: flipInX 1s ease-out;
+        }
+        .profit-section p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+        }
+        .profit-section strong {
+            color: var(--secondary-color);
             font-weight: 900;
         }
 
-        .step h4 {
-            color: var(--secondary-color);
-            font-weight: 700;
-            margin-top: 0;
+        /* Other Bots */
+        .other-bots .grid-container {
+            display: grid;
+            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
-
-        .profit-section {
-            background: var(--dark-bg);
-            color: #f0f0f0;
-            padding: 60px 0;
-            border-radius: 30px;
-            margin: 50px 0;
-            text-align: center;
+        .other-bots .grid-item {
+            background: var(--primary-color);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: fadeInRight 1s ease-out forwards;
+            opacity: 0;
         }
+        .other-bots .grid-item:nth-child(1) { background-color: #007bff; animation-delay: 0.2s; }
+        .other-bots .grid-item:nth-child(2) { background-color: #6610f2; animation-delay: 0.4s; }
+        .other-bots .grid-item:nth-child(3) { background-color: #fd7e14; animation-delay: 0.6s; }
+        .other-bots .grid-item:nth-child(4) { background-color: #20c997; animation-delay: 0.8s; }
 
-        .profit-section h2 {
-            color: var(--accent-color);
-        }
-
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            margin-top: 40px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--secondary-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            width: 100%;
-            padding: 20px;
-            position: relative;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background-color: var(--primary-color);
-            border: 4px solid var(--light-bg);
-            border-radius: 50%;
-            position: absolute;
-            left: 50%;
-            top: 25px;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        .timeline-item h4 {
-            color: var(--primary-color);
+        .other-bots .grid-item h3 {
+            margin: 0;
+            font-size: 1.2em;
             font-weight: 700;
         }
-        
+        .other-bots .grid-item:hover {
+            transform: scale(1.05);
+            background-color: var(--accent-color); /* שינוי צבע עדינה בהובר */
+        }
+
+        /* Footer */
         footer {
             text-align: center;
             padding: 40px 20px;
-            background-color: var(--dark-bg);
-            color: #f0f0f0;
-            margin-top: 50px;
+            background-color: var(--bg-color-dark);
+            color: var(--light-text);
+            margin-top: 80px;
+            border-top-left-radius: 70px;
+            border-top-right-radius: 70px;
         }
-
         footer p {
             margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes flipInX {
+            from { transform: perspective(400px) rotate3d(1, 0, 0, 90deg); opacity: 0; }
+            to { transform: perspective(400px) rotate3d(1, 0, 0, 0deg); opacity: 1; }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5em;
+            }
+            .hero-section p {
+                font-size: 1.1em;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .cta-button {
+                width: 80%;
+                margin: 0 auto;
+            }
+            .section-title {
+                font-size: 2em;
+            }
+            .what-is-nifty .content-box {
+                padding: 25px;
+            }
+            .profit-section {
+                margin: 40px 10px;
+                padding: 60px 15px;
+            }
         }
     </style>
+
+    <meta property="og:title" content="ניפטי - משחק החנויות שמשגע את המדינה!">
+    <meta property="og:description" content="הקימו חנות טלגרם אישית בקלות, התחילו להרוויח עוד היום והצטרפו למהפכה הדיגיטלית!">
+    <meta property="og:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png"> <meta property="og:url" content="https://osifeu-prog.github.io/my-shop-landing/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png">
 </head>
 <body>
 
-    <header>
-        <div class="container">
+    <header class="hero-section">
+        <div class="hero-content">
             <h1>ניפטי - משחק החנויות שמשגע את המדינה!</h1>
-            <p>ברוכים הבאים לעולם של ניפטי - המקום שבו החלום על קניון אישי הופך למציאות.</p>
-            <a href="#how-it-works" class="cta-button">התחל עכשיו</a>
+            <p>ברוכים הבאים לעולם של ניפטי - המקום שבו החלום על קניון אישי הופך למציאות. בניפטי, אנו מאמינים שלכל אחד ואחת מגיע להקים עסק משלו, בקלות וביעילות. הצטרפו למהפכה הדיגיטלית החדשה והתחילו להרוויח עוד היום.</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button telegram-bot">
+                    <i class="fab fa-telegram-plane"></i> כנסו לחנות שלי בטלגרם
+                </a>
+                <a href="https://t.me/OsifFin" target="_blank" class="cta-button contact-me">
+                    <i class="fas fa-comments"></i> דברו איתי ישירות
+                </a>
+            </div>
         </div>
     </header>
 
     <main>
-        <section id="what-is" class="section">
+        <section class="section what-is-nifty">
             <div class="container">
                 <h2 class="section-title">מה זה ניפטי?</h2>
-                <div class="card">
-                    <p><strong>ניפטי</strong> הוא משחק וחוויה עסקית שמאפשרת לכם להקים חנות אישית בתוך פלטפורמת טלגרם. במקום להשקיע אלפי שקלים בפיתוח אתרים או שכירות פיזית, בניפטי אתם רוכשים חנות דיגיטלית משלכם ומקבלים שליטה מלאה על מה שאתם מוכרים.</p>
-                    <p>דמיינו זאת כך: אתם רוכשים חנות בקניון הענק של טלגרם, הופכים אותה לייחודית רק לכם, ומתחילים למכור.</p>
+                <div class="content-box">
+                    <div class="image-overlay"></div> <p><strong>ניפטי</strong> הוא משחק וחוויה עסקית שמאפשרת לכם להקים חנות אישית בתוך פלטפורמת טלגרם. במקום להשקיע אלפי שקלים בפיתוח אתרים או שכירות פיזית, בניפטי אתם רוכשים חנות דיגיטלית משלכם ומקבלים שליטה מלאה על מה שאתם מוכרים.</p>
+                    <p><strong>דמיינו זאת כך:</strong> אתם רוכשים חנות בקניון הענק של טלגרם, הופכים אותה לייחודית רק לכם, ומתחילים למכור.</p>
                 </div>
             </div>
         </section>
-
-        <section id="how-it-works" class="section">
+        
+        <section class="section how-it-works">
             <div class="container">
                 <h2 class="section-title">איך זה עובד?</h2>
-                <div class="how-it-works-grid">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h4>רכישת חנות</h4>
-                        <p>כל משתתף רוכש חנות בטלגרם בעלות של 189 ₪.</p>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <h3><i class="fas fa-shopping-cart"></i> רכישת חנות</h3>
+                        <p>כל משתתף רוכש חנות דיגיטלית בטלגרם בעלות של 189 ₪.</p>
                     </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h4>קבלת טוקן</h4>
-                        <p>עם הרכישה, אתם מקבלים טוקן ייחודי לבוט החנות שלכם.</p>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-key"></i> קבלת טוקן לבוט</h3>
+                        <p>מיד עם הרכישה, תקבלו טוקן ייחודי להפעלת החנות האישית שלכם.</p>
                     </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h4>עיצוב הגלריה</h4>
-                        <p>בתוך הבוט, אתם מקבלים גלריה של תמונות "קלפי משחק" שתוכלו למכור לאספנים.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <h4>התאמה אישית</h4>
-                        <p>האפשרות הגמישה ביותר: אתם יכולים לערוך ולשנות את התמונות, הכותרות, התיאורים והמחירים כדי להציג כל מוצר שרק תחלמו למכור.</p>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-paint-brush"></i> עיצוב והתאמה אישית</h3>
+                        <p>עצבו את גלריית המוצרים שלכם, שנו תמונות, תיאורים ומחירים בקלות.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="profit-mechanism" class="profit-section">
-            <div class="container">
-                <h2 class="section-title">מנגנון הרווח והכספים</h2>
-                <p>כל המכירות מתבצעות דרך החנות שלכם, שכוללת גם מערכת קבלות מבוססת NFT לתיעוד דיגיטלי של כל עסקה.</p>
-                <p>מנגנון הרווח שלנו פשוט וברור: <strong>כל העברה כספית מאומתת מחשבון הלקוח עוברת ישירות לחשבון הבנק שלכם.</strong> החנות שלכם מנהלת את העסקה, והרווח כולו שלכם.</p>
+        <section class="section">
+            <div class="profit-section">
+                <h2>מנגנון הרווח והכספים</h2>
+                <p>כל המכירות מתבצעות דרך החנות שלכם, הכוללת גם מערכת קבלות מבוססת NFT לתיעוד דיגיטלי. והכי חשוב?</p>
+                <p><strong>כל העברה כספית מאומתת מחשבון הלקוח עוברת <span style="color: var(--secondary-color);">ישירות לחשבון הבנק שלכם!</span> הרווח כולו שלכם.</strong></p>
             </div>
         </section>
 
-        <section id="other-bots" class="section">
+        <section class="section other-bots">
             <div class="container">
                 <h2 class="section-title">בוטים נוספים שניתן ליצור</h2>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">אנחנו בניפטי לא מסתפקים רק בחנויות. אנו מפתחים מערכות בוטים שלמות שיכולות להפוך כל רעיון למציאות:</p>
-                <div class="card-grid">
-                    <div class="card">
-                        <h3>בוטים לאירועים</h3>
-                        <p>ניהול רישום, קבלת תשלומים אוטומטית וחלוקת כרטיסים לאירועים.</p>
-                    </div>
-                    <div class="card">
-                        <h3>בוטים לניהול קהילות</h3>
-                        <p>ניהול משתמשים, חלוקת תכנים בלעדיים וארגון סקרים.</p>
-                    </div>
-                    <div class="card">
-                        <h3>בוטים לשירות לקוחות</h3>
-                        <p>מתן מענה אוטומטי, מעקב אחר הזמנות וטיפול בפניות.</p>
-                    </div>
-                    <div class="card">
-                        <h3>בוטים למסחר דיגיטלי</h3>
-                        <p>בניית מערכות מסחר מורכבות, ניהול מלאי אוטומטי ויצירת קטלוגים.</p>
-                    </div>
+                <p>אנחנו בניפטי לא מסתפקים רק בחנויות. אנו מפתחים מערכות בוטים שלמות שיכולות להפוך כל רעיון למציאות:</p>
+                <div class="grid-container">
+                    <div class="grid-item"><h3><i class="fas fa-calendar-alt"></i> אירועים</h3></div>
+                    <div class="grid-item"><h3><i class="fas fa-users"></i> קהילות</h3></div>
+                    <div class="grid-item"><h3><i class="fas fa-headset"></i> שירות לקוחות</h3></div>
+                    <div class="grid-item"><h3><i class="fas fa-chart-line"></i> מסחר דיגיטלי</h3></div>
                 </div>
-            </div>
-        </section>
-
-        <section id="project-history" class="section">
-            <div class="container">
-                <h2 class="section-title">היסטוריית הפרויקט</h2>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">הפרויקט החל כרעיון פורץ דרך להנגיש את עולם העסקים הדיגיטלי לכל אחד.</p>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <h4>שלב 1: פיתוח הבוט הבסיסי</h4>
-                        <p>הקמת תשתית הבוט הראשוני.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4>שלב 2: יצירת מודל הקלפים והחנות</h4>
-                        <p>שילוב הרעיון של "קלפי המשחק" בתוך החנות הדיגיטלית.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4>שלב 3: פיתוח מערכת הרווחים והתשלומים</h4>
-                        <p>בניית מנגנון תשלומים ישיר ובטוח למשתמשים.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4>שלב 4: הרחבת הפלטפורמה</h4>
-                        <p>פיתוח יכולות נוספות עבור הבוטים, כפי שפורט לעיל.</p>
-                    </div>
-                </div>
-                <p style="text-align: center; margin-top: 40px;">אנו ממשיכים לפתח ולשכלל את המערכות כדי להציע לכם את הכלים המתקדמים והיעילים ביותר להגשמת חלומותיכם העסקיים.</p>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 ניפטי. כל הזכויות שמורות.</p>
+            <p>&copy; 2025 Nifty. כל הזכויות שמורות. נבנה באהבה עבור osifeu-prog.</p>
         </div>
     </footer>
 
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for animations on scroll
+        const faders = document.querySelectorAll('.section, .content-box, .grid-item, .profit-section');
+
+        const appearOptions = {
+            threshold: 0.2,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.style.animation = 'none'; /* Remove animation once it appears */
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            fader.style.opacity = '0';
+            fader.style.transform = 'translateY(20px)';
+            appearOnScroll.observe(fader);
+        });
+
+        // Special handling for grid items to use their specific delays
+        document.querySelectorAll('.how-it-works .grid-item, .other-bots .grid-item').forEach(item => {
+            item.style.opacity = '0'; // Ensure it starts hidden
+            item.style.animationPlayState = 'paused'; // Pause specific animation until visible
+
+            const itemObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running'; // Play when visible
+                        itemObserver.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+            itemObserver.observe(item);
+        });
+
+    </script>
 </body>
 </html>
