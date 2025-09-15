@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חווית רישום ושיתוף למשחק</title>
+    <title>פרטי התחרות</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,481 +12,45 @@
             background-color: #f3f4f6;
             direction: rtl;
         }
-        canvas {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 1.5rem;
-            width: 100%;
-            height: 500px;
-        }
-        .dynamic-points {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #4a90e2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .share-button {
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .share-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .modal-overlay {
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-        }
     </style>
 </head>
 <body class="p-6 md:p-12">
-
-    <!-- Modal for success message -->
-    <div id="success-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center modal-overlay">
-        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm mx-auto text-center border-t-4 border-green-500 transform transition-all scale-95 opacity-0 duration-300">
-            <div class="text-green-500 text-5xl mb-4">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">נרשמת בהצלחה!</h2>
-            <p class="text-gray-600 mb-4">שיהיה בהצלחה בתחרות. כעת תוכל לשתף את הקישור שלך כדי לצבור נקודות.</p>
-            <button onclick="closeModal('success-modal')" class="bg-blue-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-600 transition-colors">סגור</button>
-        </div>
-    </div>
-    
-    <!-- Modal for share link -->
-    <div id="share-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center modal-overlay">
-        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm mx-auto text-center border-t-4 border-blue-500 transform transition-all scale-95 opacity-0 duration-300">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">שתף את הקישור שלך</h2>
-            <p class="text-gray-600 mb-4">העתק את הקישור הבלעדי שלך ושתף אותו עם חברים כדי לזכות בנקודות!</p>
-            <div class="flex items-center space-x-2 bg-gray-100 p-3 rounded-lg mb-4">
-                <input id="share-link-input" type="text" readonly class="flex-grow bg-transparent text-gray-700 font-mono text-sm border-none outline-none">
-                <button onclick="copyToClipboard()" class="text-blue-500 hover:text-blue-600 transition-colors">
-                    <i class="far fa-copy"></i>
-                </button>
-            </div>
-            <button onclick="closeModal('share-modal')" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-bold hover:bg-gray-300 transition-colors">סגור</button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden p-6 md:p-10 lg:p-16">
+    <main class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden p-6 md:p-10 lg:p-16">
         <header class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-2">תחרות השיתופים הגדולה!</h1>
-            <p class="text-lg text-gray-600">הירשמו, שתפו והביאו הכי הרבה חברים כדי לנצח.</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">תחרות השיתופים נושאת פרסים והפתעות!</h1>
+            <p class="text-lg text-gray-600">קבלו את כל הפרטים על התחרות הכי משתלמת של הקיץ.</p>
         </header>
 
-        <!-- Registration Form -->
-        <section id="registration-section" class="mb-10 p-6 md:p-8 bg-gray-50 rounded-2xl shadow-inner border border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">הצטרפו לתחרות!</h2>
-            <p id="referrer-info" class="text-center text-sm text-gray-500 mb-4 hidden"></p>
-            <form id="registration-form" class="space-y-4 max-w-md mx-auto">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">שם מלא</label>
-                    <input type="text" id="name" name="name" placeholder="השם שלך" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <div>
-                    <label for="profilePic" class="block text-sm font-medium text-gray-700 mb-1">קישור לתמונת פרופיל</label>
-                    <input type="url" id="profilePic" name="profilePic" placeholder="העתק קישור של תמונה (לדוגמה: Imgur, Google Photos)" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <button type="submit" id="register-button" class="w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors">
-                    <span id="button-text">הירשם לתחרות</span>
-                    <span id="button-loading" class="hidden"><i class="fas fa-spinner fa-spin"></i></span>
-                </button>
-            </form>
-        </section>
-
-        <!-- User Dashboard (Hidden until registered) -->
-        <section id="dashboard-section" class="hidden space-y-8">
-            <div class="bg-blue-500 text-white rounded-2xl p-6 md:p-8 text-center shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold mb-2">הלוח שלך, <span id="user-name"></span></h2>
-                <div class="text-4xl md:text-5xl font-extrabold dynamic-points mb-4">
-                    <span id="user-points">0</span>
-                    <span class="text-2xl font-normal">נקודות</span>
-                </div>
-                <p class="text-sm">הקישור הייחודי שלך: <span id="user-id-display" class="font-bold text-yellow-300 text-sm"></span></p>
-                <button onclick="openModal('share-modal')" class="bg-white text-blue-500 font-bold py-2 px-6 rounded-full mt-4 hover:bg-gray-100 transition-colors share-button">
-                    <i class="fas fa-share-alt mr-2"></i> שתף קישור
-                </button>
+        <section class="mb-8 space-y-6">
+            <div class="bg-gray-50 p-6 rounded-2xl shadow-inner border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">איך זה עובד?</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>הירשמו לתחרות בעמוד הראשי.</li>
+                    <li>קבלו קישור ייחודי ואישי.</li>
+                    <li>שתפו את הקישור עם כמה שיותר חברים.</li>
+                    <li>על כל חבר שיירשם דרך הקישור שלכם, תקבלו נקודה אחת.</li>
+                    <li>החבר שהבאתם יקבל גם הוא קישור ייחודי, ונקודות על כל מי שיביא.</li>
+                </ul>
             </div>
 
-            <!-- Interactive Referral Map -->
-            <div class="p-6 md:p-8 bg-gray-50 rounded-2xl shadow-inner border border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">מפת ההפניות האינטראקטיבית</h2>
-                <p class="text-sm text-gray-500 mb-4">לכל חבר שהבאת יש קשר ישיר אליך. כל חבר שהם מביאים מוסיף שורה נוספת לרשת שלך.</p>
-                <canvas id="referral-map"></canvas>
-            </div>
-
-            <!-- User Feed and Leaderboard -->
-            <div class="p-6 md:p-8 bg-gray-50 rounded-2xl shadow-inner border border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">פיד משתמשים ודירוג</h2>
-                <!-- Move the loading message outside of the container -->
-                <p id="loading-users" class="text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i>טוען משתמשים...</p>
-                <div id="users-container" class="space-y-6">
-                    <!-- User cards will be injected here by JavaScript -->
-                </div>
+            <div class="bg-gray-50 p-6 rounded-2xl shadow-inner border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">מהם הפרסים?</h2>
+                <p class="text-gray-700">הפרסים יחולקו למקומות הראשונים:
+                </p>
+                <ul class="mt-4 space-y-2 text-gray-700 font-bold">
+                    <li><span class="text-yellow-500">מקום ראשון:</span> סוף שבוע זוגי מפנק בצימר יוקרתי!</li>
+                    <li><span class="text-gray-500">מקום שני:</span> כרטיס מתנה בשווי 500 ש"ח לחנות מוצרי אלקטרוניקה.</li>
+                    <li><span class="text-amber-700">מקום שלישי:</span> ערכת גיימינג מקצועית.</li>
+                    <li><span class="text-gray-400">מקומות 4-10:</span> חולצת טריקו ממותגת של המשחק.</li>
+                </ul>
             </div>
         </section>
 
+        <div class="text-center mt-10">
+            <a href="index.html" class="inline-block bg-blue-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-600 transition-colors">
+                חזרה לעמוד הרישום
+            </a>
+        </div>
     </main>
-
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, addDoc, getDocs, orderBy, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        // Debugging logs for Firebase
-        setLogLevel('debug');
-
-        // Global variables for Firebase access, provided by the canvas environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : undefined;
-
-        let db, auth;
-        let userId = null;
-        let unsubscribe = null;
-        let usersData = [];
-        let previousPoints = 0;
-        let animationFrameId = null;
-        let targetPoints = 0;
-
-        // UI elements
-        const registrationSection = document.getElementById('registration-section');
-        const dashboardSection = document.getElementById('dashboard-section');
-        const registrationForm = document.getElementById('registration-form');
-        const userNameDisplay = document.getElementById('user-name');
-        const userPointsDisplay = document.getElementById('user-points');
-        const usersContainer = document.getElementById('users-container');
-        const referralMapCanvas = document.getElementById('referral-map');
-        const referralMapCtx = referralMapCanvas.getContext('2d');
-        const shareLinkInput = document.getElementById('share-link-input');
-        const userIdDisplay = document.getElementById('user-id-display');
-        const referrerInfo = document.getElementById('referrer-info');
-        const registerButton = document.getElementById('register-button');
-        const buttonText = document.getElementById('button-text');
-        const buttonLoading = document.getElementById('button-loading');
-        const loadingUsersMessage = document.getElementById('loading-users');
-
-
-        // Check for a referrer in the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const referrerId = urlParams.get('referrer');
-        if (referrerId) {
-            referrerInfo.textContent = `נרשמים דרך חבר: ${referrerId}`;
-            referrerInfo.classList.remove('hidden');
-        }
-
-        // --- Firebase Initialization and Authentication ---
-        const initFirebase = async () => {
-            try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                // Sign in with the custom token or anonymously
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                // Listen for auth state changes
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        // Start listening for data once authenticated
-                        listenForData();
-                    } else {
-                        console.error('משתמש לא מחובר.');
-                    }
-                });
-
-            } catch (error) {
-                console.error("שגיאה באתחול Firebase:", error);
-            }
-        };
-
-        // --- Firestore Data Listening ---
-        const listenForData = () => {
-            if (unsubscribe) {
-                unsubscribe();
-            }
-            const collectionPath = `/artifacts/${appId}/public/data/competitionUsers`;
-            const q = collection(db, collectionPath);
-            unsubscribe = onSnapshot(q, async (snapshot) => {
-                const fetchedUsers = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                usersData = fetchedUsers.sort((a, b) => b.points - a.points);
-                
-                renderUsersFeed();
-                drawReferralMap();
-                
-                // Find and update current user's points
-                const currentUserDoc = fetchedUsers.find(u => u.id === userId);
-                if (currentUserDoc) {
-                    const currentPoints = currentUserDoc.points || 0;
-                    targetPoints = currentPoints;
-                    if (previousPoints !== targetPoints) {
-                        animatePoints();
-                    }
-                    previousPoints = targetPoints;
-                    userNameDisplay.textContent = currentUserDoc.name;
-                    userIdDisplay.textContent = userId;
-                    registrationSection.classList.add('hidden');
-                    dashboardSection.classList.remove('hidden');
-                } else {
-                    registrationSection.classList.remove('hidden');
-                    dashboardSection.classList.add('hidden');
-                }
-            });
-        };
-
-        // --- Dynamic Points Counter Animation ---
-        const animatePoints = () => {
-            const startPoints = previousPoints;
-            const duration = 1000; // milliseconds
-            const startTime = performance.now();
-
-            const step = (currentTime) => {
-                const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / duration, 1);
-                const currentValue = Math.floor(progress * (targetPoints - startPoints) + startPoints);
-                userPointsDisplay.textContent = currentValue.toLocaleString();
-
-                if (progress < 1) {
-                    animationFrameId = requestAnimationFrame(step);
-                } else {
-                    userPointsDisplay.textContent = targetPoints.toLocaleString();
-                }
-            };
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = requestAnimationFrame(step);
-        };
-
-        // --- UI Rendering Functions ---
-
-        const renderUsersFeed = async () => {
-            // Check if the loading message exists before trying to hide it
-            if (loadingUsersMessage) {
-              loadingUsersMessage.classList.add('hidden');
-            }
-            usersContainer.innerHTML = ''; // Clear previous content
-
-            // Fetch and calculate points for each user
-            const usersWithPoints = await Promise.all(usersData.map(async (user) => {
-                const q = query(collection(db, `/artifacts/${appId}/public/data/competitionUsers`), where("referrerId", "==", user.id));
-                const snapshot = await getCountFromServer(q);
-                const points = snapshot.data().count;
-                return { ...user, points };
-            }));
-
-            // Sort by points again after fetching
-            const sortedUsers = usersWithPoints.sort((a, b) => b.points - a.points);
-
-            sortedUsers.forEach(user => {
-                const userCard = document.createElement('div');
-                userCard.className = 'flex items-center space-x-4 space-x-reverse bg-white p-6 rounded-2xl shadow-md border border-gray-100 transition-transform hover:scale-[1.01]';
-                userCard.innerHTML = `
-                    <div class="flex-shrink-0">
-                        <img src="${user.profilePic}" alt="פרופיל של ${user.name}" class="w-16 h-16 rounded-full object-cover border-4 border-blue-200">
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-xl font-semibold text-gray-900">${user.name}</h3>
-                        <p class="text-sm text-gray-500"> ${user.id}</p>
-                        <p class="text-md font-bold text-gray-700 mt-2">
-                            <span class="text-blue-500">${user.points.toLocaleString()}</span> נקודות
-                        </p>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button onclick="copyLink('${user.id}')" class="bg-gray-200 text-gray-700 p-2 rounded-full hover:bg-gray-300 transition-colors tooltip">
-                            <i class="fas fa-link"></i>
-                            <span class="tooltip-text">העתק קישור</span>
-                        </button>
-                    </div>
-                `;
-                usersContainer.appendChild(userCard);
-            });
-        };
-
-        const drawReferralMap = () => {
-            if (usersData.length === 0) return;
-            const canvasWidth = referralMapCanvas.offsetWidth;
-            const canvasHeight = referralMapCanvas.offsetHeight;
-            referralMapCanvas.width = canvasWidth;
-            referralMapCanvas.height = canvasHeight;
-
-            referralMapCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-            const userPositions = {};
-            const centerX = canvasWidth / 2;
-            const centerY = canvasHeight / 2;
-            const radius = Math.min(centerX, centerY) * 0.8;
-            const angleStep = (2 * Math.PI) / usersData.length;
-
-            usersData.forEach((user, index) => {
-                const angle = index * angleStep;
-                userPositions[user.id] = {
-                    x: centerX + radius * Math.cos(angle),
-                    y: centerY + radius * Math.sin(angle)
-                };
-            });
-
-            // Draw lines first
-            usersData.forEach(user => {
-                if (user.referrerId && userPositions[user.referrerId]) {
-                    referralMapCtx.beginPath();
-                    referralMapCtx.moveTo(userPositions[user.id].x, userPositions[user.id].y);
-                    referralMapCtx.lineTo(userPositions[user.referrerId].x, userPositions[user.referrerId].y);
-                    referralMapCtx.strokeStyle = '#4a90e2';
-                    referralMapCtx.lineWidth = 2;
-                    referralMapCtx.globalAlpha = 0.5;
-                    referralMapCtx.stroke();
-                }
-            });
-
-            // Draw nodes and images
-            usersData.forEach(user => {
-                const pos = userPositions[user.id];
-                const img = new Image();
-                img.onload = () => {
-                    referralMapCtx.globalAlpha = 1.0;
-                    referralMapCtx.beginPath();
-                    referralMapCtx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
-                    referralMapCtx.closePath();
-                    referralMapCtx.fillStyle = '#ffffff';
-                    referralMapCtx.fill();
-                    referralMapCtx.lineWidth = 3;
-                    referralMapCtx.strokeStyle = '#3b82f6';
-                    referralMapCtx.stroke();
-                    referralMapCtx.save();
-                    referralMapCtx.beginPath();
-                    referralMapCtx.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
-                    referralMapCtx.closePath();
-                    referralMapCtx.clip();
-                    referralMapCtx.drawImage(img, pos.x - 22, pos.y - 22, 44, 44);
-                    referralMapCtx.restore();
-
-                    // Draw name below image
-                    referralMapCtx.fillStyle = '#1f2937';
-                    referralMapCtx.font = '12px Inter';
-                    referralMapCtx.textAlign = 'center';
-                    referralMapCtx.fillText(user.name, pos.x, pos.y + 35);
-                };
-                img.onerror = () => {
-                    // Fallback to text if image fails
-                    referralMapCtx.fillStyle = '#1f2937';
-                    referralMapCtx.font = 'bold 16px Inter';
-                    referralMapCtx.textAlign = 'center';
-                    referralMapCtx.fillText(user.name, pos.x, pos.y);
-                };
-                img.src = user.profilePic;
-            });
-        };
-
-        // --- Event Listeners and Functions ---
-        
-        registrationForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            buttonText.classList.add('hidden');
-            buttonLoading.classList.remove('hidden');
-            registerButton.disabled = true;
-
-            const name = document.getElementById('name').value;
-            const profilePic = document.getElementById('profilePic').value;
-            
-            try {
-                const userRef = doc(db, `/artifacts/${appId}/public/data/competitionUsers`, userId);
-                const userDoc = await getDoc(userRef);
-
-                if (userDoc.exists()) {
-                    // User already exists, handle gracefully
-                    console.log('משתמש כבר קיים');
-                    openModal('success-modal');
-                } else {
-                    const newUser = {
-                        name,
-                        profilePic,
-                        referrerId: referrerId || null,
-                        createdAt: new Date(),
-                        points: 0 // Will be updated by the cloud function logic
-                    };
-                    await setDoc(userRef, newUser);
-                    openModal('success-modal');
-                }
-
-            } catch (error) {
-                console.error('שגיאה בהוספת משתמש:', error);
-                
-            } finally {
-                buttonText.classList.remove('hidden');
-                buttonLoading.classList.add('hidden');
-                registerButton.disabled = false;
-            }
-        });
-
-        // Modal functions
-        window.openModal = (modalId) => {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.querySelector('div').classList.remove('scale-95', 'opacity-0');
-            }, 10);
-            if (modalId === 'share-modal') {
-                const shareLink = `${window.location.origin}${window.location.pathname}?referrer=${userId}`;
-                shareLinkInput.value = shareLink;
-            }
-        };
-
-        window.closeModal = (modalId) => {
-            const modal = document.getElementById(modalId);
-            modal.querySelector('div').classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        };
-
-        window.copyToClipboard = async () => {
-            const linkText = shareLinkInput.value;
-            try {
-                // Use execCommand for broader compatibility within iframes
-                const input = document.createElement('textarea');
-                input.value = linkText;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                console.log('הקישור הועתק בהצלחה!');
-                alert('הקישור הועתק בהצלחה!');
-            } catch (err) {
-                console.error('שגיאה בהעתקה:', err);
-                alert('שגיאה בהעתקה. אנא נסה שוב.');
-            }
-        };
-
-        window.copyLink = async (userIdToCopy) => {
-            const linkText = `${window.location.origin}${window.location.pathname}?referrer=${userIdToCopy}`;
-            try {
-                const input = document.createElement('textarea');
-                input.value = linkText;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-            } catch (err) {
-                console.error('שגיאה בהעתקה:', err);
-            }
-        };
-
-        // Adjust canvas on window resize
-        window.onresize = drawReferralMap;
-
-        // Start everything
-        initFirebase();
-    </script>
 </body>
 </html>
