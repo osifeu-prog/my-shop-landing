@@ -3,491 +3,788 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חווית רישום ושיתוף למשחק</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>ניפטי - משחק החנויות שמשגע את המדינה!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Open Graph Tags for Social Sharing -->
+    <meta property="og:title" content="ניפטי - משחק החנויות שמשגע את המדינה!">
+    <meta property="og:description" content="הקימו חנות טלגרם אישית בקלות, התחילו להרוויח עוד היום והצטרפו למהפכה הדיגיטלית!">
+    <meta property="og:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png?v=2">
+    <meta property="og:url" content="https://osifeu-prog.github.io/my-shop-landing/">
+    <meta property="og:type" content="website">
+    <meta property="og:image:width" content="500">
+    <meta property="og:image:height" content="500">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://osifeu-prog.github.io/my-shop-landing/nifty_logo.png?v=2">
+
     <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #28a745;
+            --accent-color: #6f42c1;
+            --text-color: #343a40;
+            --light-text: #f8f9fa;
+            --bg-color-light: #f8f9fa;
+            --bg-color-dark: #212529;
+            --gradient-light: linear-gradient(135deg, #e0f2f7, #c6e7f2);
+            --gradient-dark: linear-gradient(135deg, #1f2733, #0a0e14);
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            font-family: 'Heebo', sans-serif;
             direction: rtl;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color-light);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            text-align: right;
         }
-        canvas {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 1.5rem;
-            width: 100%;
-            height: 500px;
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        .dynamic-points {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 2.5rem;
+        .hero-section {
+            text-align: center;
+            padding: 100px 20px;
+            background: var(--gradient-light);
+            border-bottom-left-radius: 70px;
+            border-bottom-right-radius: 70px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 90% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 50%);
+            animation: bg-animate 20s infinite alternate;
+        }
+        @keyframes bg-animate {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+            100% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-section h1 {
+            font-size: 3.5em;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin: 0 0 15px 0;
+            animation: fadeInDown 1s ease-out;
+        }
+        .hero-section p {
+            font-size: 1.4em;
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            animation: zoomIn 1s ease-out 1.2s forwards;
+            opacity: 0;
+        }
+        .cta-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 30px;
             font-weight: 700;
-            color: #4a90e2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 1.1em;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-        .share-button {
-            transition: transform 0.2s, box-shadow 0.2s;
+        .cta-button.telegram-bot {
+            background-color: var(--primary-color);
         }
-        .share-button:hover {
+        .cta-button.registration-bot {
+            background-color: var(--accent-color);
+        }
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+        .cta-button.telegram-bot:hover {
+            background-color: #0056b3;
+        }
+        .cta-button.contact-me:hover {
+            background-color: #218838;
+        }
+        .cta-button.registration-bot:hover {
+            background-color: #5d34a5;
+        }
+        .section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            color: var(--accent-color);
+            margin-bottom: 50px;
+            position: relative;
+            animation: fadeInDown 1s ease-out;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 5px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+            border-radius: 5px;
+        }
+        .content-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: right;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        .content-box.dark-summary {
+            background-color: var(--bg-color-dark);
+            color: var(--light-text);
+        }
+        .content-box p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        .content-box strong {
+            color: var(--primary-color);
+        }
+        .content-box.dark-summary strong {
+             color: var(--secondary-color);
+        }
+        .grid-container {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        .grid-item {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            animation: zoomIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        .grid-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        .grid-item h3 {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-top: 0;
+        }
+        .grid-item p {
+            color: #555;
+        }
+        .recruitment-section .grid-item h3 {
+            color: var(--secondary-color);
+        }
+        .testimonials-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .testimonial-grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            justify-content: center;
+        }
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: right;
+            transition: transform 0.3s ease;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        .testimonial-card .quote {
+            font-size: 1.1em;
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        .testimonial-card .author {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+        .testimonial-card .bot-link {
+            display: block;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .testimonial-card .bot-link:hover {
+            color: var(--primary-color);
+        }
+        .testimonial-card .bot-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 5px;
+        }
+        .testimonial-card .bot-info .bot-name {
+            font-weight: bold;
+        }
+
+        .image-section {
+            padding: 50px 0;
+            text-align: center;
+        }
+        .main-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease-in-out;
+            animation: zoomIn 1.5s ease-out forwards;
+            opacity: 0;
+        }
+        .main-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Referral Contest Section */
+        .referral-contest-section {
+            padding: 80px 0;
+            background-color: var(--bg-color-dark);
+            color: var(--light-text);
+            text-align: center;
+        }
+        .referral-contest-section h2 {
+            color: var(--secondary-color);
+        }
+        .referral-link-box {
+            background-color: #343a40;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        #referral-link-text {
+            color: var(--light-text);
+            font-family: monospace;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex-grow: 1;
+        }
+        .copy-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
             transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .modal-overlay {
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
+        .leaderboard-container {
+            margin-top: 40px;
+            background-color: #343a40;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 40px auto 0;
+        }
+        .leaderboard-container h3 {
+            color: var(--light-text);
+            font-size: 1.5em;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #495057;
+        }
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        .leaderboard-item .rank {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        .leaderboard-item .user-id {
+            font-family: monospace;
+            font-size: 0.9em;
+            direction: ltr; /* Ensure left-to-right for user IDs */
+        }
+        .leaderboard-item .count {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2.5em; }
+            .hero-section p { font-size: 1.1em; }
+            .cta-buttons { flex-direction: column; gap: 15px; }
+            .cta-button { width: 80%; margin: 0 auto; }
+            .section-title { font-size: 2em; }
         }
     </style>
 </head>
-<body class="p-6 md:p-12">
-
-    <!-- Modal for success message -->
-    <div id="success-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center modal-overlay">
-        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm mx-auto text-center border-t-4 border-green-500 transform transition-all scale-95 opacity-0 duration-300">
-            <div class="text-green-500 text-5xl mb-4">
-                <i class="fas fa-check-circle"></i>
+<body>
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>ניפטי - משחק החנויות שמשגע את המדינה!</h1>
+            <p>ברוכים הבאים לעולם של ניפטי - המקום שבו החלום על קניון אישי הופך למציאות. בניפטי, אנו מאמינים שלכל אחד ואחת מגיע להקים עסק משלו, בקלות וביעילות. הצטרפו למהפכה הדיגיטלית החדשה והתחילו להרוויח עוד היום.</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button telegram-bot">
+                    <i class="fab fa-telegram-plane"></i> כנסו לחנות שלי בטלגרם
+                </a>
+                <a href="https://t.me/OsifFin" target="_blank" class="cta-button contact-me">
+                    <i class="fas fa-comments"></i> דברו איתי ישירות
+                </a>
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">נרשמת בהצלחה!</h2>
-            <p class="text-gray-600 mb-4">שיהיה בהצלחה בתחרות. כעת תוכל לשתף את הקישור שלך כדי לצבור נקודות.</p>
-            <button onclick="closeModal('success-modal')" class="bg-blue-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-600 transition-colors">סגור</button>
         </div>
-    </div>
-    
-    <!-- Modal for share link -->
-    <div id="share-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center modal-overlay">
-        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm mx-auto text-center border-t-4 border-blue-500 transform transition-all scale-95 opacity-0 duration-300">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">שתף את הקישור שלך</h2>
-            <p class="text-gray-600 mb-4">העתק את הקישור הבלעדי שלך ושתף אותו עם חברים כדי לזכות בנקודות!</p>
-            <div class="flex items-center space-x-2 bg-gray-100 p-3 rounded-lg mb-4">
-                <input id="share-link-input" type="text" readonly class="flex-grow bg-transparent text-gray-700 font-mono text-sm border-none outline-none">
-                <button onclick="copyToClipboard()" class="text-blue-500 hover:text-blue-600 transition-colors">
-                    <i class="far fa-copy"></i>
-                </button>
-            </div>
-            <button onclick="closeModal('share-modal')" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-bold hover:bg-gray-300 transition-colors">סגור</button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden p-6 md:p-10 lg:p-16">
-        <header class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-2">תחרות השיתופים הגדולה!</h1>
-            <p class="text-lg text-gray-600">הירשמו, שתפו והביאו הכי הרבה חברים כדי לנצח.</p>
-        </header>
-
-        <!-- Registration Form -->
-        <section id="registration-section" class="mb-10 p-6 md:p-8 bg-gray-50 rounded-2xl shadow-inner border border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">הצטרפו לתחרות!</h2>
-            <p id="referrer-info" class="text-center text-sm text-gray-500 mb-4 hidden"></p>
-            <form id="registration-form" class="space-y-4 max-w-md mx-auto">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">שם מלא</label>
-                    <input type="text" id="name" name="name" placeholder="השם שלך" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <div>
-                    <label for="profilePic" class="block text-sm font-medium text-gray-700 mb-1">קישור לתמונת פרופיל</label>
-                    <input type="url" id="profilePic" name="profilePic" placeholder="העתק קישור של תמונה (לדוגמה: Imgur, Google Photos)" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <button type="submit" id="register-button" class="w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors">
-                    <span id="button-text">הירשם לתחרות</span>
-                    <span id="button-loading" class="hidden"><i class="fas fa-spinner fa-spin"></i></span>
-                </button>
-            </form>
-        </section>
-
-        <!-- User Dashboard (Hidden until registered) -->
-        <section id="dashboard-section" class="hidden space-y-8">
-            <div class="bg-blue-500 text-white rounded-2xl p-6 md:p-8 text-center shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold mb-2">הלוח שלך, <span id="user-name"></span></h2>
-                <div class="text-4xl md:text-5xl font-extrabold dynamic-points mb-4">
-                    <span id="user-points">0</span>
-                    <span class="text-2xl font-normal">נקודות</span>
-                </div>
-                <p class="text-sm">הקישור הייחודי שלך: <span id="user-id-display" class="font-bold text-yellow-300 text-sm"></span></p>
-                <button onclick="openModal('share-modal')" class="bg-white text-blue-500 font-bold py-2 px-6 rounded-full mt-4 hover:bg-gray-100 transition-colors share-button">
-                    <i class="fas fa-share-alt mr-2"></i> שתף קישור
-                </button>
-            </div>
-
-            <!-- Interactive Referral Map -->
-            <div class="p-6 md:p-8 bg-gray-50 rounded-2xl shadow-inner border border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">מפת ההפניות האינטראקטיבית</h2>
-                <p class="text-sm text-gray-500 mb-4">לכל חבר שהבאת יש קשר ישיר אליך. כל חבר שהם מביאים מוסיף שורה נוספת לרשת שלך.</p>
-                <canvas id="referral-map"></canvas>
-            </div>
-
-            <!-- User Feed and Leaderboard -->
-            <div class="p-6 md:p-8 bg-gray-50 rounded-2xl shadow-inner border border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">פיד משתמשים ודירוג</h2>
-                <!-- Move the loading message outside of the container -->
-                <p id="loading-users" class="text-center text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i>טוען משתמשים...</p>
-                <div id="users-container" class="space-y-6">
-                    <!-- User cards will be injected here by JavaScript -->
+    </header>
+    <main>
+        <section class="section what-is-nifty">
+            <div class="container">
+                <h2 class="section-title">מה זה ניפטי?</h2>
+                <div class="content-box">
+                    <p><strong>ניפטי</strong> הוא משחק וחוויה עסקית שמאפשרת לכם להקים חנות אישית בתוך פלטפורמת טלגרם. במקום להשקיע אלפי שקלים בפיתוח אתרים או שכירות פיזית, בניפטי אתם רוכשים חנות דיגיטלית משלכם ומקבלים שליטה מלאה על מה שאתם מוכרים.</p>
+                    <p><strong>דמיינו זאת כך:</strong> אתם רוכשים חנות בקניון הענק של טלגרם, הופכים אותה לייחודית רק לכם, ומתחילים למכור.</p>
+                    <div class="block-cta">
+                        <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
+                             כנסו עכשיו לחנות בטלגרם <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
-
-    </main>
-
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, addDoc, getDocs, orderBy, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
-        // Debugging logs for Firebase
-        setLogLevel('debug');
+        <section class="section image-section">
+            <div class="container">
+                 <img src="https://osifeu-prog.github.io/my-shop-landing/c0190e32-af92-45f5-9d50-131da2550659.jpeg" alt="אריה צבעוני עם מגן דוד" class="main-image">
+            </div>
+        </section>
 
-        // Global variables for Firebase access, provided by the canvas environment
+        <section class="section how-it-works">
+            <div class="container">
+                <h2 class="section-title">איך זה עובד?</h2>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <h3><i class="fas fa-shopping-cart"></i> רכישת חנות</h3>
+                        <p>כל משתתף רוכש חנות דיגיטלית בטלגרם בעלות של 189 ₪.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-key"></i> קבלת טוקן לבוט</h3>
+                        <p>מיד עם הרכישה, תקבלו טוקן ייחודי להפעלת החנות האישית שלכם.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-paint-brush"></i> עיצוב והתאמה אישית</h3>
+                        <p>עצבו את גלריית המוצרים שלכם, שנו תמונות, תיאורים ומחירים בקלות.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-rocket"></i> התחלת מכירות</h3>
+                        <p>התחילו למכור בקלות וקבלו את הרווחים ישירות לחשבון הבנק שלכם.</p>
+                    </div>
+                </div>
+                <div class="block-cta">
+                    <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
+                         התחילו לבנות חנות משלכם <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
+                </div>
+        </section>
+        <section class="section">
+            <div class="profit-section">
+                <h2 class="section-title">מנגנון הרווח והכספים</h2>
+                <p>כל המכירות מתבצעות דרך החנות שלכם, הכוללת גם מערכת קבלות מבוססות NFT לתיעוד דיגיטלי. והכי חשוב?</p>
+                <p><strong>כל העברה כספית מאומתת מחשבון הלקוח עוברת <span style="color: var(--secondary-color);">ישירות לחשבון הבנק שלכם!</span> הרווח כולו שלכם.</strong></p>
+                <div class="block-cta">
+                    <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
+                         התחילו להרוויח היום <i class="fab fa-telegram-plane"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="section recruitment-section">
+            <div class="container">
+                <h2 class="section-title">אשמח לעבוד איתך</h2>
+                <p>אנחנו תמיד מחפשים שותפים חדשים עם תשוקה לחדשנות, למכירות, ולפיתוחים טכנולוגיים. אם אתם מעוניינים להצטרף לצוות שלנו או להגדיל את הקהילה - צרו קשר!</p>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <h3><i class="fas fa-laptop-code"></i> מפתחים</h3>
+                        <p>בואו לבנות איתנו את הדור הבא של הבוטים לטלגרם.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-chart-line"></i> אנשי מכירות</h3>
+                        <p>הצטרפו אלינו והרוויחו עמלות על כל חנות שתמכרו.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-users"></i> מנהלי קהילה</h3>
+                        <p>עזרו לנו לגדול ולהפיץ את הבשורה של ניפטי.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-bullhorn"></i> משווקים שותפים</h3>
+                        <p>הפכו לשותפים שלנו וקבלו אחוזים מכל לקוח חדש שתביאו.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Existing section for customer testimonials -->
+        <section class="section testimonials-section">
+            <div class="container">
+                <h2 class="section-title">פידבק מלקוחות</h2>
+                <div class="testimonial-grid" id="testimonials-container">
+                    <!-- Testimonials will be dynamically added here by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- New Referral Contest Section -->
+        <section class="section referral-contest-section">
+            <div class="container">
+                <h2 class="section-title">תחרות השיתופים הגדולה!</h2>
+                <p>שתפו את הקישור הייחודי שלכם וצבורו נקודות על כל חבר חדש שמצטרף דרככם. המשתתף שיצבור את מירב ההפניות בסוף השבוע יזכה בפלטפורמה בחינם!</p>
+
+                <div class="referral-stats">
+                    <p style="font-size: 1.2em; font-weight: bold;">
+                        <i class="fas fa-trophy"></i>
+                        הקישור האישי שלך לזכייה:
+                    </p>
+                    <div class="referral-link-box">
+                        <span id="referral-link-text">...</span>
+                        <button id="copy-button" class="copy-button">
+                            <i class="fas fa-copy"></i>
+                            העתק קישור
+                        </button>
+                    </div>
+                    <p style="font-weight: bold;">
+                        <i class="fas fa-user-plus"></i> מספר החברים שהבאת:
+                        <span id="referral-count">0</span>
+                    </p>
+                     <p style="font-size: 0.9em;">
+                        מזהה משתמש ייחודי: <span id="user-id">...</span>
+                    </p>
+                </div>
+
+                <div class="leaderboard-container">
+                    <h3><i class="fas fa-chart-bar"></i> לוח אלופים</h3>
+                    <div id="leaderboard">
+                        <div class="leaderboard-item">
+                            <span class="rank">#1</span>
+                            <span class="user-id">טוען...</span>
+                            <span class="count">...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NIFTY. כל הזכויות שמורות. נבנה באהבה עבור קהילת המשקיעים של סלה ללא גבולות. מטבע הקריפטו שיושק בקרוב על גבי פלטפורמה זו. <a href="https://t.me/OsifFin" target="_blank" style="color: var(--primary-color); text-decoration: none;">צרו איתי קשר כאן</a>.</p>
+        </div>
+        <!-- New Registration Bot Button -->
+        <div style="text-align: center; padding: 20px 0;">
+            <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button registration-bot">
+                <i class="fas fa-user-plus"></i> הרשמה לבוט
+            </a>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables for Firebase config and app ID
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : undefined;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-        let db, auth;
-        let userId = null;
-        let unsubscribe = null;
-        let usersData = [];
-        let previousPoints = 0;
-        let animationFrameId = null;
-        let targetPoints = 0;
+        // Logging for debugging
+        setLogLevel('debug');
 
-        // UI elements
-        const registrationSection = document.getElementById('registration-section');
-        const dashboardSection = document.getElementById('dashboard-section');
-        const registrationForm = document.getElementById('registration-form');
-        const userNameDisplay = document.getElementById('user-name');
-        const userPointsDisplay = document.getElementById('user-points');
-        const usersContainer = document.getElementById('users-container');
-        const referralMapCanvas = document.getElementById('referral-map');
-        const referralMapCtx = referralMapCanvas.getContext('2d');
-        const shareLinkInput = document.getElementById('share-link-input');
-        const userIdDisplay = document.getElementById('user-id-display');
-        const referrerInfo = document.getElementById('referrer-info');
-        const registerButton = document.getElementById('register-button');
-        const buttonText = document.getElementById('button-text');
-        const buttonLoading = document.getElementById('button-loading');
-        const loadingUsersMessage = document.getElementById('loading-users');
+        // Main app logic
+        document.addEventListener('DOMContentLoaded', async function() {
+            // General scroll animations
+            const faders = document.querySelectorAll('.content-box, .grid-item, .profit-section, .testimonial-card, .main-image, .referral-contest-section');
+            const appearOptions = {
+                threshold: 0.2,
+                rootMargin: "0px 0px -50px 0px"
+            };
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.animationPlayState = 'running';
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+            faders.forEach(fader => {
+                fader.style.opacity = '0';
+                fader.style.transform = 'translateY(20px)';
+                fader.style.animationPlayState = 'paused';
+                appearOnScroll.observe(fader);
+            });
 
+            // Testimonials logic
+            const testimonialsContainer = document.getElementById('testimonials-container');
+            const testimonials = [
+                {
+                    author: "אביב הכהן",
+                    feedback: "הופתעתי לטובה מהקלות שבה הקמתי את החנות. הממשק פשוט, אינטואיטיבי, ואני כבר רואה תוצאות!",
+                    botName: "בוט הפריטים של אביב",
+                    botLink: "https://t.me/aviv_bot",
+                    icon: "fas fa-box"
+                },
+                {
+                    author: "רונית מזרחי",
+                    feedback: "הקונספט של חנות בטלגרם הוא גאוני. זה חיסכון בזמן ובכסף, והשירות מדהים.",
+                    botName: "בוט האופנה של רונית",
+                    botLink: "https://t.me/ronit_fashion_bot",
+                    icon: "fas fa-tshirt"
+                },
+                {
+                    author: "דניאל לוי",
+                    feedback: "הפיצ'ר של הקבלות מבוססות NFT הוא שיגעון. זה נותן לי שקט נפשי ויכולת לעקוב אחרי הכל בקלות.",
+                    botName: "בוט המכירות של דניאל",
+                    botLink: "https://t.me/daniel_sales_bot",
+                    icon: "fas fa-chart-line"
+                }
+            ];
 
-        // Check for a referrer in the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const referrerId = urlParams.get('referrer');
-        if (referrerId) {
-            referrerInfo.textContent = `נרשמים דרך חבר: ${referrerId}`;
-            referrerInfo.classList.remove('hidden');
-        }
+            function renderTestimonials() {
+                testimonialsContainer.innerHTML = '';
+                testimonials.forEach(testimonial => {
+                    const card = document.createElement('div');
+                    card.className = 'testimonial-card';
+                    card.innerHTML = `
+                        <p class="quote">"${testimonial.feedback}"</p>
+                        <p class="author">- ${testimonial.author}</p>
+                        <a href="${testimonial.botLink}" target="_blank" class="bot-link">
+                            <i class="${testimonial.icon}"></i> <span class="bot-name">${testimonial.botName}</span>
+                        </a>
+                    `;
+                    testimonialsContainer.appendChild(card);
+                });
+            }
 
-        // --- Firebase Initialization and Authentication ---
-        const initFirebase = async () => {
+            renderTestimonials();
+
+            // Firebase and Referral Contest Logic
+            const referralLinkTextElement = document.getElementById('referral-link-text');
+            const referralCountElement = document.getElementById('referral-count');
+            const userIdElement = document.getElementById('user-id');
+            const copyButton = document.getElementById('copy-button');
+            const leaderboardElement = document.getElementById('leaderboard');
+            
+            let db, auth, userId;
+            let isAuthReady = false;
+
+            // Initialize Firebase
             try {
                 const app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                return;
+            }
 
-                // Sign in with the custom token or anonymously
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
+            // Authentication state listener
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    isAuthReady = true;
+                    console.log("User authenticated with UID:", userId);
+                    initializeReferralTracking();
                 } else {
-                    await signInAnonymously(auth);
+                    // Try to sign in with custom token or anonymously
+                    try {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (error) {
+                        console.error("Authentication failed:", error);
+                        // If auth fails, use a temporary ID for basic functionality
+                        userId = crypto.randomUUID();
+                        isAuthReady = true;
+                        console.log("Authentication failed, using temporary ID:", userId);
+                        initializeReferralTracking();
+                    }
+                }
+            });
+
+            async function initializeReferralTracking() {
+                if (!isAuthReady) return;
+
+                // Check for referral link in the URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const referrerId = urlParams.get('ref');
+                console.log("Referrer ID from URL:", referrerId);
+
+                // Update Firestore if a user was referred
+                if (referrerId && referrerId !== userId) {
+                    const referrerDocRef = doc(db, `artifacts/${appId}/public/data/referrals/${referrerId}`);
+                    try {
+                        const referrerDoc = await getDoc(referrerDocRef);
+                        const currentCount = referrerDoc.exists() ? referrerDoc.data().count : 0;
+                        await setDoc(referrerDocRef, { count: currentCount + 1, lastReferred: new Date().toISOString() }, { merge: true });
+                        console.log(`Referral from ${userId} successfully recorded for ${referrerId}`);
+                    } catch (error) {
+                        console.error("Error updating referrer count:", error);
+                    }
                 }
 
-                // Listen for auth state changes
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        // Start listening for data once authenticated
-                        listenForData();
+                // Display user's unique link and ID
+                const referralLink = `${window.location.origin}${window.location.pathname}?ref=${userId}`;
+                referralLinkTextElement.textContent = referralLink;
+                userIdElement.textContent = userId;
+
+                // Listen for real-time updates to the current user's referral count
+                const userDocRef = doc(db, `artifacts/${appId}/public/data/referrals/${userId}`);
+                onSnapshot(userDocRef, (doc) => {
+                    if (doc.exists()) {
+                        const data = doc.data();
+                        referralCountElement.textContent = data.count || 0;
                     } else {
-                        console.error('משתמש לא מחובר.');
+                        referralCountElement.textContent = 0;
+                        console.log("No referral data found for this user.");
                     }
+                }, (error) => {
+                    console.error("Error listening to user doc:", error);
                 });
 
-            } catch (error) {
-                console.error("שגיאה באתחול Firebase:", error);
-            }
-        };
+                // Listen for real-time updates to the leaderboard
+                const referralsColl = collection(db, `artifacts/${appId}/public/data/referrals`);
+                onSnapshot(referralsColl, async (snapshot) => {
+                    const allReferrals = [];
+                    snapshot.forEach(doc => {
+                        allReferrals.push({
+                            id: doc.id,
+                            count: doc.data().count || 0
+                        });
+                    });
 
-        // --- Firestore Data Listening ---
-        const listenForData = () => {
-            if (unsubscribe) {
-                unsubscribe();
-            }
-            const collectionPath = `/artifacts/${appId}/public/data/competitionUsers`;
-            const q = collection(db, collectionPath);
-            unsubscribe = onSnapshot(q, async (snapshot) => {
-                const fetchedUsers = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                usersData = fetchedUsers.sort((a, b) => b.points - a.points);
-                
-                renderUsersFeed();
-                drawReferralMap();
-                
-                // Find and update current user's points
-                const currentUserDoc = fetchedUsers.find(u => u.id === userId);
-                if (currentUserDoc) {
-                    const currentPoints = currentUserDoc.points || 0;
-                    targetPoints = currentPoints;
-                    if (previousPoints !== targetPoints) {
-                        animatePoints();
+                    // Sort the referrals by count descending and take the top 10
+                    allReferrals.sort((a, b) => b.count - a.count);
+                    const topTen = allReferrals.slice(0, 10);
+                    
+                    // Render the leaderboard
+                    leaderboardElement.innerHTML = '';
+                    if (topTen.length === 0) {
+                        leaderboardElement.innerHTML = '<p style="text-align: center; color: #888;">התחרות עדיין לא התחילה! היה/תה הראשון/ה!</p>';
+                    } else {
+                        topTen.forEach((item, index) => {
+                            const leaderboardItem = document.createElement('div');
+                            leaderboardItem.classList.add('leaderboard-item');
+                            leaderboardItem.innerHTML = `
+                                <span class="rank">#${index + 1}</span>
+                                <span class="user-id">${item.id}</span>
+                                <span class="count">${item.count}</span>
+                            `;
+                            leaderboardElement.appendChild(leaderboardItem);
+                        });
                     }
-                    previousPoints = targetPoints;
-                    userNameDisplay.textContent = currentUserDoc.name;
-                    userIdDisplay.textContent = userId;
-                    registrationSection.classList.add('hidden');
-                    dashboardSection.classList.remove('hidden');
-                } else {
-                    registrationSection.classList.remove('hidden');
-                    dashboardSection.classList.add('hidden');
-                }
-            });
-        };
-
-        // --- Dynamic Points Counter Animation ---
-        const animatePoints = () => {
-            const startPoints = previousPoints;
-            const duration = 1000; // milliseconds
-            const startTime = performance.now();
-
-            const step = (currentTime) => {
-                const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / duration, 1);
-                const currentValue = Math.floor(progress * (targetPoints - startPoints) + startPoints);
-                userPointsDisplay.textContent = currentValue.toLocaleString();
-
-                if (progress < 1) {
-                    animationFrameId = requestAnimationFrame(step);
-                } else {
-                    userPointsDisplay.textContent = targetPoints.toLocaleString();
-                }
-            };
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = requestAnimationFrame(step);
-        };
-
-        // --- UI Rendering Functions ---
-
-        const renderUsersFeed = async () => {
-            // Check if the loading message exists before trying to hide it
-            if (loadingUsersMessage) {
-              loadingUsersMessage.classList.add('hidden');
+                }, (error) => {
+                    console.error("Error listening to leaderboard:", error);
+                });
             }
-            usersContainer.innerHTML = ''; // Clear previous content
 
-            // Fetch and calculate points for each user
-            const usersWithPoints = await Promise.all(usersData.map(async (user) => {
-                const q = query(collection(db, `/artifacts/${appId}/public/data/competitionUsers`), where("referrerId", "==", user.id));
-                const snapshot = await getCountFromServer(q);
-                const points = snapshot.data().count;
-                return { ...user, points };
-            }));
-
-            // Sort by points again after fetching
-            const sortedUsers = usersWithPoints.sort((a, b) => b.points - a.points);
-
-            sortedUsers.forEach(user => {
-                const userCard = document.createElement('div');
-                userCard.className = 'flex items-center space-x-4 space-x-reverse bg-white p-6 rounded-2xl shadow-md border border-gray-100 transition-transform hover:scale-[1.01]';
-                userCard.innerHTML = `
-                    <div class="flex-shrink-0">
-                        <img src="${user.profilePic}" alt="פרופיל של ${user.name}" class="w-16 h-16 rounded-full object-cover border-4 border-blue-200">
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-xl font-semibold text-gray-900">${user.name}</h3>
-                        <p class="text-sm text-gray-500"> ${user.id}</p>
-                        <p class="text-md font-bold text-gray-700 mt-2">
-                            <span class="text-blue-500">${user.points.toLocaleString()}</span> נקודות
-                        </p>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button onclick="copyLink('${user.id}')" class="bg-gray-200 text-gray-700 p-2 rounded-full hover:bg-gray-300 transition-colors tooltip">
-                            <i class="fas fa-link"></i>
-                            <span class="tooltip-text">העתק קישור</span>
-                        </button>
-                    </div>
-                `;
-                usersContainer.appendChild(userCard);
-            });
-        };
-
-        const drawReferralMap = () => {
-            if (usersData.length === 0) return;
-            const canvasWidth = referralMapCanvas.offsetWidth;
-            const canvasHeight = referralMapCanvas.offsetHeight;
-            referralMapCanvas.width = canvasWidth;
-            referralMapCanvas.height = canvasHeight;
-
-            referralMapCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-            const userPositions = {};
-            const centerX = canvasWidth / 2;
-            const centerY = canvasHeight / 2;
-            const radius = Math.min(centerX, centerY) * 0.8;
-            const angleStep = (2 * Math.PI) / usersData.length;
-
-            usersData.forEach((user, index) => {
-                const angle = index * angleStep;
-                userPositions[user.id] = {
-                    x: centerX + radius * Math.cos(angle),
-                    y: centerY + radius * Math.sin(angle)
-                };
-            });
-
-            // Draw lines first
-            usersData.forEach(user => {
-                if (user.referrerId && userPositions[user.referrerId]) {
-                    referralMapCtx.beginPath();
-                    referralMapCtx.moveTo(userPositions[user.id].x, userPositions[user.id].y);
-                    referralMapCtx.lineTo(userPositions[user.referrerId].x, userPositions[user.referrerId].y);
-                    referralMapCtx.strokeStyle = '#4a90e2';
-                    referralMapCtx.lineWidth = 2;
-                    referralMapCtx.globalAlpha = 0.5;
-                    referralMapCtx.stroke();
+            // Copy button logic
+            copyButton.addEventListener('click', () => {
+                const link = referralLinkTextElement.textContent;
+                const tempInput = document.createElement('input');
+                tempInput.value = link;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand('copy');
+                    console.log('Referral link copied to clipboard!');
+                    copyButton.textContent = 'הועתק!';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '<i class="fas fa-copy"></i> העתק קישור';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
                 }
+                document.body.removeChild(tempInput);
             });
-
-            // Draw nodes and images
-            usersData.forEach(user => {
-                const pos = userPositions[user.id];
-                const img = new Image();
-                img.onload = () => {
-                    referralMapCtx.globalAlpha = 1.0;
-                    referralMapCtx.beginPath();
-                    referralMapCtx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
-                    referralMapCtx.closePath();
-                    referralMapCtx.fillStyle = '#ffffff';
-                    referralMapCtx.fill();
-                    referralMapCtx.lineWidth = 3;
-                    referralMapCtx.strokeStyle = '#3b82f6';
-                    referralMapCtx.stroke();
-                    referralMapCtx.save();
-                    referralMapCtx.beginPath();
-                    referralMapCtx.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
-                    referralMapCtx.closePath();
-                    referralMapCtx.clip();
-                    referralMapCtx.drawImage(img, pos.x - 22, pos.y - 22, 44, 44);
-                    referralMapCtx.restore();
-
-                    // Draw name below image
-                    referralMapCtx.fillStyle = '#1f2937';
-                    referralMapCtx.font = '12px Inter';
-                    referralMapCtx.textAlign = 'center';
-                    referralMapCtx.fillText(user.name, pos.x, pos.y + 35);
-                };
-                img.onerror = () => {
-                    // Fallback to text if image fails
-                    referralMapCtx.fillStyle = '#1f2937';
-                    referralMapCtx.font = 'bold 16px Inter';
-                    referralMapCtx.textAlign = 'center';
-                    referralMapCtx.fillText(user.name, pos.x, pos.y);
-                };
-                img.src = user.profilePic;
-            });
-        };
-
-        // --- Event Listeners and Functions ---
-        
-        registrationForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            buttonText.classList.add('hidden');
-            buttonLoading.classList.remove('hidden');
-            registerButton.disabled = true;
-
-            const name = document.getElementById('name').value;
-            const profilePic = document.getElementById('profilePic').value;
-            
-            try {
-                const userRef = doc(db, `/artifacts/${appId}/public/data/competitionUsers`, userId);
-                const userDoc = await getDoc(userRef);
-
-                if (userDoc.exists()) {
-                    // User already exists, handle gracefully
-                    console.log('משתמש כבר קיים');
-                    openModal('success-modal');
-                } else {
-                    const newUser = {
-                        name,
-                        profilePic,
-                        referrerId: referrerId || null,
-                        createdAt: new Date(),
-                        points: 0 // Will be updated by the cloud function logic
-                    };
-                    await setDoc(userRef, newUser);
-                    openModal('success-modal');
-                }
-
-            } catch (error) {
-                console.error('שגיאה בהוספת משתמש:', error);
-                
-            } finally {
-                buttonText.classList.remove('hidden');
-                buttonLoading.classList.add('hidden');
-                registerButton.disabled = false;
-            }
         });
-
-        // Modal functions
-        window.openModal = (modalId) => {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.querySelector('div').classList.remove('scale-95', 'opacity-0');
-            }, 10);
-            if (modalId === 'share-modal') {
-                const shareLink = `${window.location.origin}${window.location.pathname}?referrer=${userId}`;
-                shareLinkInput.value = shareLink;
-            }
-        };
-
-        window.closeModal = (modalId) => {
-            const modal = document.getElementById(modalId);
-            modal.querySelector('div').classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        };
-
-        window.copyToClipboard = async () => {
-            const linkText = shareLinkInput.value;
-            try {
-                // Use execCommand for broader compatibility within iframes
-                const input = document.createElement('textarea');
-                input.value = linkText;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                console.log('הקישור הועתק בהצלחה!');
-                alert('הקישור הועתק בהצלחה!');
-            } catch (err) {
-                console.error('שגיאה בהעתקה:', err);
-                alert('שגיאה בהעתקה. אנא נסה שוב.');
-            }
-        };
-
-        window.copyLink = async (userIdToCopy) => {
-            const linkText = `${window.location.origin}${window.location.pathname}?referrer=${userIdToCopy}`;
-            try {
-                const input = document.createElement('textarea');
-                input.value = linkText;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-            } catch (err) {
-                console.error('שגיאה בהעתקה:', err);
-            }
-        };
-
-        // Adjust canvas on window resize
-        window.onresize = drawReferralMap;
-
-        // Start everything
-        initFirebase();
     </script>
 </body>
 </html>
