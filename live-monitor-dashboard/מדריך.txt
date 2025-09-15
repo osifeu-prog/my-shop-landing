@@ -1,0 +1,56 @@
+# מדריך: העלאת דשבורד חי לחווית לקוח לריפו
+
+## שלב 1: פתיחת ענף חדש
+1. פתח טרמינל בתיקיית הפרויקט שלך.
+2. משוך את הקוד האחרון:
+   ```
+   git checkout main
+   git pull
+   ```
+3. צור ענף חדש לפיצ'ר:
+   ```
+   git checkout -b feature/live-monitor-dashboard
+   ```
+
+## שלב 2: העלאת הקבצים
+1. הוסף את הקובץ `MonitorDashboard.jsx` לתיקיית `src/pages/` (או נתיב דומה בפרויקט שלך).
+2. הוסף את הקובץ `admin.js` לנתיב `server/routes/`.
+3. ודא שיש לך את המודל `User.js` בתיקיית `server/models/` (או עדכן אותו בהתאם).
+4. ודא שבקובץ `app.js` בשרת יש את החיבור לנתיב `/api/admin`.
+
+## שלב 3: חיבור React Router
+אם אתה משתמש ב־React Router, הוסף נתיב חדש:
+```jsx
+<Route path="/monitor" element={<MonitorDashboard />} />
+```
+או דומה לפי המבנה שלך.
+
+## שלב 4: בדיקת עבודה
+1. הרץ את השרת:
+   ```
+   npm run server
+   ```
+2. הרץ את האתר:
+   ```
+   npm start
+   ```
+3. גש לכתובת: `http://localhost:3000/monitor`
+4. לחץ על כפתור "רענן" – הדשבורד יתעדכן!
+
+## שלב 5: פתיחת Pull Request
+1. בצע commit לכל הקבצים:
+   ```
+   git add .
+   git commit -m "הוספת דשבורד חי לחווית לקוח"
+   ```
+2. דחוף את הענף החדש:
+   ```
+   git push origin feature/live-monitor-dashboard
+   ```
+3. פתח Pull Request דרך ממשק גיטהאב:
+   - עבור לדף הריפו שלך: [my-shop-landing](https://github.com/osifeu-prog/my-shop-landing)
+   - תראה אפשרות לפתיחת PR מהענף החדש ל-main.
+
+## הערות:
+- ניתן להרחיב בקלות את הדשבורד ולהוסיף עוד שדות/גרפים.
+- תוכל להוסיף הרשאות/אבטחה לדשבורד לפי הצורך.
