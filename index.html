@@ -210,38 +210,6 @@
         .recruitment-section .grid-item h3 {
             color: var(--secondary-color);
         }
-        .stats-section {
-            background-color: var(--bg-color-dark);
-            color: var(--light-text);
-            padding: 80px 0;
-            border-radius: 20px;
-            margin-top: 60px;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 20px;
-        }
-        .stat-box {
-            text-align: center;
-            padding: 20px;
-            flex-basis: 30%;
-            max-width: 300px;
-            animation: fadeIn 1s ease-out forwards;
-            opacity: 0;
-        }
-        .stat-box h3 {
-            font-size: 2em;
-            font-weight: 900;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        .stat-box p {
-            font-size: 1em;
-            margin: 0;
-        }
         .testimonials-section {
             padding: 80px 0;
             text-align: center;
@@ -315,57 +283,88 @@
         .main-image:hover {
             transform: scale(1.05);
         }
-        /* Modal (Lightbox) styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.9);
+
+        /* Referral Contest Section */
+        .referral-contest-section {
+            padding: 80px 0;
+            background-color: var(--bg-color-dark);
+            color: var(--light-text);
             text-align: center;
         }
-        .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 80%;
-            max-height: 80vh;
+        .referral-contest-section h2 {
+            color: var(--secondary-color);
+        }
+        .referral-link-box {
+            background-color: #343a40;
+            padding: 20px;
             border-radius: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        #referral-link-text {
+            color: var(--light-text);
+            font-family: monospace;
+            text-align: left;
             overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex-grow: 1;
         }
-        #modalImage {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 70vh;
-            display: block;
-            margin: auto;
-        }
-        #modalDescription {
-            margin-top: 20px;
-            font-size: 1.2em;
+        .copy-button {
+            background-color: var(--primary-color);
             color: white;
-            padding: 0 20px;
-        }
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
             cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
         }
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
+        .copy-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
         }
+        .leaderboard-container {
+            margin-top: 40px;
+            background-color: #343a40;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 40px auto 0;
+        }
+        .leaderboard-container h3 {
+            color: var(--light-text);
+            font-size: 1.5em;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #495057;
+        }
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        .leaderboard-item .rank {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        .leaderboard-item .user-id {
+            font-family: monospace;
+            font-size: 0.9em;
+            direction: ltr; /* Ensure left-to-right for user IDs */
+        }
+        .leaderboard-item .count {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
         /* Animations */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -378,24 +377,6 @@
             .cta-buttons { flex-direction: column; gap: 15px; }
             .cta-button { width: 80%; margin: 0 auto; }
             .section-title { font-size: 2em; }
-            .stat-box { flex-basis: 100%; max-width: none; }
-        }
-        .youtube-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 15px;
-            margin-top: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-        .youtube-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
         }
     </style>
 </head>
@@ -452,6 +433,10 @@
                         <h3><i class="fas fa-paint-brush"></i> עיצוב והתאמה אישית</h3>
                         <p>עצבו את גלריית המוצרים שלכם, שנו תמונות, תיאורים ומחירים בקלות.</p>
                     </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-rocket"></i> התחלת מכירות</h3>
+                        <p>התחילו למכור בקלות וקבלו את הרווחים ישירות לחשבון הבנק שלכם.</p>
+                    </div>
                 </div>
                 <div class="block-cta">
                     <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
@@ -463,7 +448,7 @@
         <section class="section">
             <div class="profit-section">
                 <h2 class="section-title">מנגנון הרווח והכספים</h2>
-                <p>כל המכירות מתבצעות דרך החנות שלכם, הכוללת גם מערכת קבלות מבוססת NFT לתיעוד דיגיטלי. והכי חשוב?</p>
+                <p>כל המכירות מתבצעות דרך החנות שלכם, הכוללת גם מערכת קבלות מבוססות NFT לתיעוד דיגיטלי. והכי חשוב?</p>
                 <p><strong>כל העברה כספית מאומתת מחשבון הלקוח עוברת <span style="color: var(--secondary-color);">ישירות לחשבון הבנק שלכם!</span> הרווח כולו שלכם.</strong></p>
                 <div class="block-cta">
                     <a href="https://t.me/Buy_My_Shop_bot" target="_blank" class="cta-button">
@@ -498,6 +483,13 @@
                             <i class="fas fa-comments"></i> דברו איתי
                         </a>
                     </div>
+                    <div class="grid-item">
+                        <h3><i class="fas fa-bullhorn"></i> משווקים שותפים</h3>
+                        <p>הפכו לשותפים שלנו וקבלו אחוזים מכל לקוח חדש שתביאו.</p>
+                        <a href="https://t.me/OsifFin" target="_blank" class="cta-button">
+                            <i class="fas fa-comments"></i> דברו איתי
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -512,55 +504,46 @@
             </div>
         </section>
         
-        <!-- Combined and moved "My Experience" section to the end -->
-        <section class="section my-experience">
+        <!-- New Referral Contest Section -->
+        <section class="section referral-contest-section">
             <div class="container">
-                <h2 class="section-title">מחשבות ועדכונים אחרונים</h2>
-                <div class="content-box dark-summary">
-                     <p>
-                        אני רק לומד איך לבנות דף נחיתה וחנות בפלטפורמה הזו, ואני שמח שקיבלתי את הקוד הזה לעבוד איתו כדי לארגן חווית משתמש טובה יותר. בהמשך אצטרך לקשר את החנות שלי, ואני מקווה שאוכל לעשות זאת גם עבורכם, אבל לבינתיים, זה המצב.
+                <h2 class="section-title">תחרות השיתופים הגדולה!</h2>
+                <p>שתפו את הקישור הייחודי שלכם וצבורו נקודות על כל חבר חדש שמצטרף דרככם. המשתתף שיצבור את מירב ההפניות בסוף השבוע יזכה בפלטפורמה בחינם!</p>
+
+                <div class="referral-stats">
+                    <p style="font-size: 1.2em; font-weight: bold;">
+                        <i class="fas fa-trophy"></i>
+                        הקישור האישי שלך לזכייה:
                     </p>
-                    <p style="font-size: 1.2em; font-weight: bold; color: var(--accent-color);">
-                        כמה זמן יקח לכם להיות מנהל בוט פאקטורי משלכם?
+                    <div class="referral-link-box">
+                        <span id="referral-link-text">...</span>
+                        <button id="copy-button" class="copy-button">
+                            <i class="fas fa-copy"></i>
+                            העתק קישור
+                        </button>
+                    </div>
+                    <p style="font-weight: bold;">
+                        <i class="fas fa-user-plus"></i> מספר החברים שהבאת:
+                        <span id="referral-count">0</span>
                     </p>
-                    <p>
-                        זו שאלה שחשבתי עליה בזמן שאני בונה את הדף הזה. המשחק הזה מאפשר לכל אחד להפוך ליזם ולבנות עסק משלו.
+                     <p style="font-size: 0.9em;">
+                        מזהה משתמש ייחודי: <span id="user-id">...</span>
                     </p>
-                    <h3 style="color: var(--light-text); text-align: center; margin-top: 40px; margin-bottom: 20px;">מדדי עבודה מרשימים</h3>
-                    <div class="stats-section" style="background: none; box-shadow: none;">
-                        <div class="stat-box">
-                            <h3 id="uptime-counter">...</h3>
-                            <p>זמן שהאתר באוויר</p>
-                        </div>
-                        <div class="stat-box">
-                            <h3 id="edits-counter">...</h3>
-                            <p>מספר העריכות בקוד</p>
-                        </div>
-                         <div class="stat-box">
-                            <h3 id="gpt-productivity-counter">...</h3>
-                            <p>מדד פרודוקטיביות מול Gemini</p>
-                        </div>
-                        <div class="stat-box">
-                            <h3 id="users-counter">...</h3>
-                            <p>מספר המשתמשים שעבדו בקוד</p>
+                </div>
+
+                <div class="leaderboard-container">
+                    <h3><i class="fas fa-chart-bar"></i> לוח אלופים</h3>
+                    <div id="leaderboard">
+                        <div class="leaderboard-item">
+                            <span class="rank">#1</span>
+                            <span class="user-id">טוען...</span>
+                            <span class="count">...</span>
                         </div>
                     </div>
-                    <h3 style="color: var(--light-text); text-align: center; margin-top: 40px; margin-bottom: 20px;">
-                        פינת ג'יפסושיגן
-                    </h3>
-                    <div class="youtube-container">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/5U37y6-g28Y?si=G40-r831g8-D522a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                    <p style="text-align: center; margin-top: 20px; font-size: 1.1em;">
-                        ג'יפסושיגן! ההרכב הכי מגניב שקם פה!! בקרוב עם חנות משלו שסוגר הכל לאירועים כולל את הנגנים שנרשמו דרכו...
-                    </p>
-                    <p style="text-align: center; font-weight: bold; font-size: 1.2em;">
-                        רוצים לדעת עוד? הרשמו @Buy_My_Shop_bot
-                    </p>
                 </div>
             </div>
         </section>
-
+        
     </main>
     
     <footer>
@@ -575,10 +558,24 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables for Firebase config and app ID
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Logging for debugging
+        setLogLevel('debug');
+
+        // Main app logic
+        document.addEventListener('DOMContentLoaded', async function() {
             // General scroll animations
-            const faders = document.querySelectorAll('.content-box, .grid-item, .profit-section, .testimonial-card, .main-image');
+            const faders = document.querySelectorAll('.content-box, .grid-item, .profit-section, .testimonial-card, .main-image, .referral-contest-section');
             const appearOptions = {
                 threshold: 0.2,
                 rootMargin: "0px 0px -50px 0px"
@@ -601,44 +598,6 @@
                 fader.style.animationPlayState = 'paused';
                 appearOnScroll.observe(fader);
             });
-
-            // Start of the blog and counter logic
-            // This is a simple, no-database solution as requested.
-            
-            // Counter logic
-            const launchDate = new Date('2025-09-14T00:00:00'); // Launch date and time
-            const editsCounter = 11; // The number of edits to show
-            const usersCounter = 2; // Hardcoded number of users who worked on the code
-
-            function updateCounters() {
-                const now = new Date();
-                const diff = now.getTime() - launchDate.getTime();
-
-                // Calculate uptime
-                const seconds = Math.floor(diff / 1000);
-                const minutes = Math.floor(seconds / 60);
-                const hours = Math.floor(minutes / 60);
-                const days = Math.floor(hours / 24);
-                const years = Math.floor(days / 365);
-                const months = Math.floor((days % 365) / 30);
-                const remainingDays = (days % 365) % 30;
-
-                const uptimeString = `${years} שנים, ${months} חודשים, ${remainingDays} ימים`;
-                document.getElementById('uptime-counter').textContent = uptimeString;
-
-                // Edits counter
-                document.getElementById('edits-counter').textContent = editsCounter;
-
-                // GPT productivity
-                const gptProductivity = 42; // This is a placeholder value. You can change it on your local machine if you track it.
-                document.getElementById('gpt-productivity-counter').textContent = gptProductivity;
-
-                // Users counter
-                document.getElementById('users-counter').textContent = usersCounter;
-            }
-            // Update counters immediately and every second
-            updateCounters();
-            setInterval(updateCounters, 1000);
 
             // Testimonials logic
             const testimonialsContainer = document.getElementById('testimonials-container');
@@ -667,7 +626,7 @@
             ];
 
             function renderTestimonials() {
-                testimonialsContainer.innerHTML = ''; // Clear existing content
+                testimonialsContainer.innerHTML = '';
                 testimonials.forEach(testimonial => {
                     const card = document.createElement('div');
                     card.className = 'testimonial-card';
@@ -682,8 +641,149 @@
                 });
             }
 
-            // Call the function to render testimonials
             renderTestimonials();
+
+            // Firebase and Referral Contest Logic
+            const referralLinkTextElement = document.getElementById('referral-link-text');
+            const referralCountElement = document.getElementById('referral-count');
+            const userIdElement = document.getElementById('user-id');
+            const copyButton = document.getElementById('copy-button');
+            const leaderboardElement = document.getElementById('leaderboard');
+            
+            let db, auth, userId;
+            let isAuthReady = false;
+
+            // Initialize Firebase
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                return;
+            }
+
+            // Authentication state listener
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    isAuthReady = true;
+                    console.log("User authenticated with UID:", userId);
+                    initializeReferralTracking();
+                } else {
+                    // Try to sign in with custom token or anonymously
+                    try {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (error) {
+                        console.error("Authentication failed:", error);
+                        // If auth fails, use a temporary ID for basic functionality
+                        userId = crypto.randomUUID();
+                        isAuthReady = true;
+                        console.log("Authentication failed, using temporary ID:", userId);
+                        initializeReferralTracking();
+                    }
+                }
+            });
+
+            async function initializeReferralTracking() {
+                if (!isAuthReady) return;
+
+                // Check for referral link in the URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const referrerId = urlParams.get('ref');
+                console.log("Referrer ID from URL:", referrerId);
+
+                // Update Firestore if a user was referred
+                if (referrerId && referrerId !== userId) {
+                    const referrerDocRef = doc(db, `artifacts/${appId}/public/data/referrals/${referrerId}`);
+                    try {
+                        const referrerDoc = await getDoc(referrerDocRef);
+                        const currentCount = referrerDoc.exists() ? referrerDoc.data().count : 0;
+                        await setDoc(referrerDocRef, { count: currentCount + 1, lastReferred: new Date().toISOString() }, { merge: true });
+                        console.log(`Referral from ${userId} successfully recorded for ${referrerId}`);
+                    } catch (error) {
+                        console.error("Error updating referrer count:", error);
+                    }
+                }
+
+                // Display user's unique link and ID
+                const referralLink = `${window.location.origin}${window.location.pathname}?ref=${userId}`;
+                referralLinkTextElement.textContent = referralLink;
+                userIdElement.textContent = userId;
+
+                // Listen for real-time updates to the current user's referral count
+                const userDocRef = doc(db, `artifacts/${appId}/public/data/referrals/${userId}`);
+                onSnapshot(userDocRef, (doc) => {
+                    if (doc.exists()) {
+                        const data = doc.data();
+                        referralCountElement.textContent = data.count || 0;
+                    } else {
+                        referralCountElement.textContent = 0;
+                        console.log("No referral data found for this user.");
+                    }
+                }, (error) => {
+                    console.error("Error listening to user doc:", error);
+                });
+
+                // Listen for real-time updates to the leaderboard
+                const referralsColl = collection(db, `artifacts/${appId}/public/data/referrals`);
+                onSnapshot(referralsColl, async (snapshot) => {
+                    const allReferrals = [];
+                    snapshot.forEach(doc => {
+                        allReferrals.push({
+                            id: doc.id,
+                            count: doc.data().count || 0
+                        });
+                    });
+
+                    // Sort the referrals by count descending and take the top 10
+                    allReferrals.sort((a, b) => b.count - a.count);
+                    const topTen = allReferrals.slice(0, 10);
+                    
+                    // Render the leaderboard
+                    leaderboardElement.innerHTML = '';
+                    if (topTen.length === 0) {
+                        leaderboardElement.innerHTML = '<p style="text-align: center; color: #888;">התחרות עדיין לא התחילה! היה/תה הראשון/ה!</p>';
+                    } else {
+                        topTen.forEach((item, index) => {
+                            const leaderboardItem = document.createElement('div');
+                            leaderboardItem.classList.add('leaderboard-item');
+                            leaderboardItem.innerHTML = `
+                                <span class="rank">#${index + 1}</span>
+                                <span class="user-id">${item.id}</span>
+                                <span class="count">${item.count}</span>
+                            `;
+                            leaderboardElement.appendChild(leaderboardItem);
+                        });
+                    }
+                }, (error) => {
+                    console.error("Error listening to leaderboard:", error);
+                });
+            }
+
+            // Copy button logic
+            copyButton.addEventListener('click', () => {
+                const link = referralLinkTextElement.textContent;
+                const tempInput = document.createElement('input');
+                tempInput.value = link;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand('copy');
+                    console.log('Referral link copied to clipboard!');
+                    copyButton.textContent = 'הועתק!';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '<i class="fas fa-copy"></i> העתק קישור';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(tempInput);
+            });
         });
     </script>
 </body>
